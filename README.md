@@ -52,10 +52,10 @@ Admin will handle all reports.
 |:---|---|---|---|
 |x|GET|api/accidents/numbersByState|Select numbers of accidents per state|
 |x|GET|api/accidents/numbersByCounty/:state|Select numbers of accidents per county by state|
-|[]|GET|api/accidents/numbersByRoad/:state/:city/:road|Searching by road, city and state|
-|[]|GET|api/accidents/numbersByHumidity|Select numbers of accidents by humidity|
-|[]|GET|api/accidents/numbersByVisibility|Select numbers of accidents by visibility|
-|[]|GET|api/accidents/numbersByWeatherCondition|Select numbers of accidents by weather condition|
+|x|GET|api/accidents/accidentsByRoad/:state/:city/:road|Searching by road, city and state|
+|x|GET|api/accidents/numbersByHumidity|Select numbers of accidents by humidity|
+|x|GET|api/accidents/numbersByVisibility|Select numbers of accidents by visibility|
+|x|GET|api/accidents/numbersByWeatherCondition|Select numbers of accidents by weather condition|
 |x|POST|api/user/signup|User registration|
 |x|GET|api/user/infoCheck|Check info is matched or not|
 |x|PUT|api/user/updatePassword/:username|Reset password for user|
