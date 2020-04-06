@@ -50,27 +50,28 @@ Admin will handle all reports.
 # RESTFUL APIs
 ||Operation|API|Description|
 |:---|---|---|---|
-|[]|GET|api/accidents/numbersByState|Select numbers of accidents per state|
-|[]|GET|api/accidents/numbersByCounty/:state|Select numbers of accidents per county by state|
-|[]|GET|api/accidents/numbersByRoad/:state/:city/:road|Searching by road, city and state|
-|[]|GET|api/accidents/numbersByHumidity|Select numbers of accidents by humidity|
-|[]|GET|api/accidents/numbersByVisibility|Select numbers of accidents by visibility|
-|[]|GET|api/accidents/numbersByWeatherCondition|Select numbers of accidents by weather condition|
-|[]|POST|api/user/register|User registration|
-|[]|GET|api/user/:username/:city/:state/:email/:phonenumber|Check info is matched or not|
-|[]|POST|api/user/:username/resetPassword|Reset password for user|
-|[]|GET|api/user/:username/:password|Check info is matched or not|
-|[]|GET|api/user/:username|Get all user info|
-|[]|UPDATE|api/user/:username/updateAccount|update new info for user|
-|[]|UPDATE|api/user/:username/settings|Update report settings|
-|[]|POST|api/user/:username/self-report|Self-report accidents|
-|[]|GET|api/user/:username/reports|View all history reports|
-|[]|DELETE|api/user/:username/:reportID|Delete pending report|
-|[]|GET|api/admin/:username/:password|Check info is matched for admin|
-|[]|POST|api/admin/:username/reports|Handle report by comments|
-|[]|UPDATE|api/admin/:username/updateReport/:reportID|Update report details|
-|[]|DELETE|api/admin/:reportID|Delete user|
-|[]|DELETE|api/admin/deleteUser/:username|Delete user|
+|x|GET|api/accidents/numbersByState|Select numbers of accidents per state|
+|x|GET|api/accidents/numbersByCounty/:state|Select numbers of accidents per county by state|
+|x|GET|api/accidents/accidentsByRoad/:state/:city/:road|Searching by road, city and state|
+|x|GET|api/accidents/numbersByHumidity|Select numbers of accidents by humidity|
+|x|GET|api/accidents/numbersByVisibility|Select numbers of accidents by visibility|
+|x|GET|api/accidents/numbersByWeatherCondition|Select numbers of accidents by weather condition|
+|x|POST|api/user/signup|User registration|
+|x|GET|api/user/infoCheck|Check info is matched or not|
+|x|PUT|api/user/updatePassword/:username|Reset password for user|
+|x|POST|api/user/login|Check info is matched or not|
+|x|GET|api/user/:username|Get all user info|
+|x|PUT|api/user/updateAllInfo/:username|update new info for user|
+|x|PUT|api/user/updateSettings/:username|Update report settings|
+|x|POST|api/user/self-report/:username|Self-report accidents|
+|x|GET|api/user/reports/:username|View all history reports|
+|x|DELETE|api/user/:username/:reportID|Delete pending report|
+|x|POST|api/admin/login|Check info is matched for admin|
+|x|PUT|api/admin/:reportID|Update report details|
+|x|DELETE|api/admin/:reportID|Delete user|
+|x|DELETE|api/admin/:username|Delete user|
+|x|GET|api/admin/allUser|Get all users|
+|x|GET|api/admin/allAccidents|Get top 100 recent accidents|
 
 # Git
 1. All developers should create a new branch, naming rules for both local and remote is develop-\<FirstName\>
