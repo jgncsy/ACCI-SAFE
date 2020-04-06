@@ -56,7 +56,7 @@ Admin will handle all reports.
 |[]|GET|api/accidents/numbersByHumidity|Select numbers of accidents by humidity|
 |[]|GET|api/accidents/numbersByVisibility|Select numbers of accidents by visibility|
 |[]|GET|api/accidents/numbersByWeatherCondition|Select numbers of accidents by weather condition|
-|x]|POST|api/user/signup|User registration|
+|x|POST|api/user/signup|User registration|
 |x|GET|api/user/infoCheck|Check info is matched or not|
 |x|PUT|api/user/updatePassword/:username|Reset password for user|
 |x|POST|api/user/login|Check info is matched or not|
