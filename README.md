@@ -68,8 +68,10 @@ Admin will handle all reports.
 |x|DELETE|api/user/:username/:reportID|Delete pending report|
 |x|POST|api/admin/login|Check info is matched for admin|
 |x|PUT|api/admin/:reportID|Update report details|
-|[]|DELETE|api/admin/:reportID|Delete user|
-|[]|DELETE|api/admin/deleteUser/:username|Delete user|
+|x|DELETE|api/admin/:reportID|Delete user|
+|x|DELETE|api/admin/:username|Delete user|
+|x|GET|api/admin/allUser|Get all users|
+|x|GET|api/admin/allAccidents|Get top 100 recent accidents|
 
 # Git
 1. All developers should create a new branch, naming rules for both local and remote is develop-\<FirstName\>
