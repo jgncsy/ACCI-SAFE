@@ -56,17 +56,17 @@ Admin will handle all reports.
 |[]|GET|api/accidents/numbersByHumidity|Select numbers of accidents by humidity|
 |[]|GET|api/accidents/numbersByVisibility|Select numbers of accidents by visibility|
 |[]|GET|api/accidents/numbersByWeatherCondition|Select numbers of accidents by weather condition|
-|[]|POST|api/user/register|User registration|
-|[]|GET|api/user/:username/:city/:state/:email/:phonenumber|Check info is matched or not|
-|[]|POST|api/user/:username/resetPassword|Reset password for user|
-|[]|GET|api/user/:username/:password|Check info is matched or not|
-|[]|GET|api/user/:username|Get all user info|
-|[]|UPDATE|api/user/:username/updateAccount|update new info for user|
-|[]|UPDATE|api/user/:username/settings|Update report settings|
+|x]|POST|api/user/signup|User registration|
+|x|GET|api/user/infoCheck|Check info is matched or not|
+|x|PUT|api/user/updatePassword/:username|Reset password for user|
+|x|POST|api/user/login|Check info is matched or not|
+|x|GET|api/user/:username|Get all user info|
+|x|PUT|api/user/updateAllInfo/:username|update new info for user|
+|x|PUT|api/user/updateSettings/:username|Update report settings|
 |[]|POST|api/user/:username/self-report|Self-report accidents|
 |[]|GET|api/user/:username/reports|View all history reports|
 |[]|DELETE|api/user/:username/:reportID|Delete pending report|
-|[]|GET|api/admin/:username/:password|Check info is matched for admin|
+|x|POST|api/admin/login|Check info is matched for admin|
 |[]|POST|api/admin/:username/reports|Handle report by comments|
 |[]|UPDATE|api/admin/:username/updateReport/:reportID|Update report details|
 |[]|DELETE|api/admin/:reportID|Delete user|
