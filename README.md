@@ -67,8 +67,7 @@ Admin will handle all reports.
 |x|GET|api/user/reports/:username|View all history reports|
 |x|DELETE|api/user/:username/:reportID|Delete pending report|
 |x|POST|api/admin/login|Check info is matched for admin|
-|[]|POST|api/admin/:username/reports|Handle report by comments|
-|[]|UPDATE|api/admin/:username/updateReport/:reportID|Update report details|
+|x|PUT|api/admin/:reportID|Update report details|
 |[]|DELETE|api/admin/:reportID|Delete user|
 |[]|DELETE|api/admin/deleteUser/:username|Delete user|
 
