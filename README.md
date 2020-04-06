@@ -63,9 +63,9 @@ Admin will handle all reports.
 |x|GET|api/user/:username|Get all user info|
 |x|PUT|api/user/updateAllInfo/:username|update new info for user|
 |x|PUT|api/user/updateSettings/:username|Update report settings|
-|[]|POST|api/user/:username/self-report|Self-report accidents|
-|[]|GET|api/user/:username/reports|View all history reports|
-|[]|DELETE|api/user/:username/:reportID|Delete pending report|
+|x|POST|api/user/self-report/:username|Self-report accidents|
+|x|GET|api/user/reports/:username|View all history reports|
+|x|DELETE|api/user/:username/:reportID|Delete pending report|
 |x|POST|api/admin/login|Check info is matched for admin|
 |[]|POST|api/admin/:username/reports|Handle report by comments|
 |[]|UPDATE|api/admin/:username/updateReport/:reportID|Update report details|
