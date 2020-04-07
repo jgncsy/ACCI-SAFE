@@ -10,19 +10,19 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(AppKeys.API_PATH + "/accident")
+@RequestMapping(AppKeys.Postgres_API_PATH + "/accident")
 public class AccidentController {
 
     @Autowired
     AccidentRepository accidentRepository;
 
     @GetMapping(value = "/numbersByState")
-    public List<count> getNumbersByState(){
+    public List<Object> getNumbersByState(){
         return accidentRepository.countByState();
     }
 
     @GetMapping(value = "/numbersByCounty/{state}")
-    public List<count> getNumbersByCounty(@PathVariable String state){
+    public List<Object> getNumbersByCounty(@PathVariable String state){
         return accidentRepository.countByCounty(state);
     }
 
@@ -32,17 +32,17 @@ public class AccidentController {
     }
 
     @GetMapping(value = "/numbersByVisibility")
-    public List<count> getNumbersByVisibility() {
+    public List<Object> getNumbersByVisibility() {
         return accidentRepository.countByVisibility();
     }
 
     @GetMapping(value = "/numbersByHumidity")
-    public List<count> getNumbersByHumidity() {
+    public List<Object> getNumbersByHumidity() {
         return accidentRepository.countByHumidity();
     }
 
     @GetMapping(value = "/numbersByWeatherCondition")
-    public List<count> getNumbersByWeatherCondition() {
+    public List<Object> getNumbersByWeatherCondition() {
         return accidentRepository.countByWeatherCondition();
     }
 

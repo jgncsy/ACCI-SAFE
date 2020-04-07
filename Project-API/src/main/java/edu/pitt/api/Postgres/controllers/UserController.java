@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping(AppKeys.API_PATH + "/user")
+@RequestMapping(AppKeys.Postgres_API_PATH + "/user")
 public class UserController {
     @Autowired
     UserRepository userRepository;
@@ -58,7 +58,7 @@ public class UserController {
     public User infoCheck(@RequestBody User user) {
         User exsitingUser = userRepository.findOneByUsernameAndCityAndStateAndEmailAndPhonenumber(user.getUsername(), user.getCity(), user.getState(), user.getEmail(), user.getPhonenumber());
         if (exsitingUser == null) {
-            throw new RuntimeException("username doesn't exist");
+            throw new RuntimeException("user doesn't exist");
         } else {
             return exsitingUser;
         }
