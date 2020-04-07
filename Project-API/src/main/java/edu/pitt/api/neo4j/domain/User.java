@@ -1,5 +1,6 @@
 package edu.pitt.api.neo4j.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -30,6 +31,7 @@ public class User {
 
     boolean isAnonymous;
 
+    @JsonIgnore
     public List<Role> getRoles() {
         if (isAdmin) {
             return Arrays.asList(Role.ROLE_ADMIN);

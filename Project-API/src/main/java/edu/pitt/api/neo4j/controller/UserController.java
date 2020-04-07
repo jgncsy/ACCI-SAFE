@@ -74,6 +74,8 @@ public class UserController {
         }
     }
 
+
+    //set anonymous
     @PutMapping(value = "/updateSettings/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public User updateSettings(@PathVariable String username) {
@@ -86,6 +88,7 @@ public class UserController {
         return userRepository.save(oldUser);
     }
 
+    //get user information
     @GetMapping(value = "/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public User getAllInfo(@PathVariable String username) {
@@ -97,6 +100,8 @@ public class UserController {
         }
     }
 
+
+    //update all information
     @PutMapping(value = "/updateAllInfo/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public User updateAllInfo(@PathVariable String username, @RequestBody User user) {

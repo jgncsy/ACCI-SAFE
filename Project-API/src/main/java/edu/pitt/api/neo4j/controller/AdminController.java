@@ -1,5 +1,6 @@
 package edu.pitt.api.neo4j.controller;
 
+import edu.pitt.api.neo4j.Config.AppKeys;
 import edu.pitt.api.neo4j.domain.Accident;
 import edu.pitt.api.neo4j.domain.User;
 import edu.pitt.api.neo4j.repository.AccidentRepository;
@@ -20,7 +21,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/admin")
+@RequestMapping(AppKeys.NEO4J_API_PATH + "/admin")
 public class AdminController {
 
     @Autowired
