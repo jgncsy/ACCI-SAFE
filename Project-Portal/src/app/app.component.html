@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
+  <div  *ngIf=!isLoginPage() class="container">
     <a class="navbar-brand" href="#">
       <svg class="bi bi-cone-striped" fill="currentColor" height="30" viewBox="0 0 16 16" width="30"
            xmlns="http://www.w3.org/2000/svg">
@@ -25,7 +25,7 @@
           <a class="nav-link" href="#">Start</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Self-Report</a>
+          <a class="nav-link" href="#">Visualization</a>
         </li>
       </ul>
       <div class="inline my-2 my-lg-0">
@@ -44,9 +44,10 @@
             </a>
             <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="#">My Account</a>
+              <a class="dropdown-item" href="#">Self-Report</a>
               <a class="dropdown-item" href="#">Settings</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Login</a>
+              <a  class="dropdown-item" href="/login">Login/Sign Up</a>
             </div>
           </li>
         </ul>
@@ -62,7 +63,9 @@
 </div>
 
 
-<footer class="page-footer font-small mdb-color lighten-3 pt-4">
+
+
+<footer *ngIf=!isLoginPage() class="page-footer font-small mdb-color lighten-3 pt-4">
 
   <div class="bg-light">
   <div class="container text-center text-md-left ">

@@ -1,11 +1,12 @@
-package edu.pitt.api.neo4j.controller;
+package edu.pitt.api.Postgres.controllers;
 
-import edu.pitt.api.neo4j.Config.AppKeys;
-import edu.pitt.api.neo4j.domain.Accident;
-import edu.pitt.api.neo4j.domain.User;
-import edu.pitt.api.neo4j.repository.AccidentRepository;
-import edu.pitt.api.neo4j.repository.UserRepository;
-import edu.pitt.api.neo4j.security.JwtTokenProvider;
+import edu.pitt.api.Postgres.config.AppKeys;
+import edu.pitt.api.Postgres.exception.CustomException;
+import edu.pitt.api.Postgres.models.Accidents;
+import edu.pitt.api.Postgres.models.User;
+import edu.pitt.api.Postgres.repository.AccidentRepository;
+import edu.pitt.api.Postgres.repository.UserRepository;
+import edu.pitt.api.Postgres.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping(AppKeys.NEO4J_API_PATH + "/user")
+@RequestMapping(AppKeys.Postgres_API_PATH + "/user")
 public class UserController {
     @Autowired
     UserRepository userRepository;
@@ -32,7 +33,7 @@ public class UserController {
     public Object Userlogin(@RequestBody LoginBody body) {
         Optional<User> tempuser = userRepository.findOneByUsernameAndPassword(body.username, body.password);
         if (!tempuser.isPresent()) {
-            return ResponseEntity.badRequest().body("User username and password mismatch");
+            return ResponseEntity.badRequest().body("Neo4jUser username and password mismatch");
         }
         return AdminController.getObject(tempuser, jwtTokenProvider);
     }
@@ -74,8 +75,6 @@ public class UserController {
         }
     }
 
-
-    //set anonymous
     @PutMapping(value = "/updateSettings/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public User updateSettings(@PathVariable String username) {
@@ -88,7 +87,6 @@ public class UserController {
         return userRepository.save(oldUser);
     }
 
-    //get user information
     @GetMapping(value = "/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public User getAllInfo(@PathVariable String username) {
@@ -100,8 +98,6 @@ public class UserController {
         }
     }
 
-
-    //update all information
     @PutMapping(value = "/updateAllInfo/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public User updateAllInfo(@PathVariable String username, @RequestBody User user) {
@@ -126,7 +122,7 @@ public class UserController {
 
     @PostMapping(value = "/self-report/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-    public Accident self_report (@PathVariable String username, @RequestBody Accident accidents) {
+    public Accidents self_report (@PathVariable String username, @RequestBody Accidents accidents) {
         User user = userRepository.findOneByUsername(username);
         if (user == null) {
             throw new RuntimeException("username doesn't exist");
@@ -140,7 +136,7 @@ public class UserController {
 
     @GetMapping(value = "/reports/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-    public List<Accident> reportsByUsername (@PathVariable String username) {
+    public List<Accidents> reportsByUsername (@PathVariable String username) {
         return accidentRepository.findAllBySource(username);
     }
 

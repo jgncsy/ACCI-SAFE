@@ -1,29 +1,27 @@
-package edu.pitt.api.neo4j.controller;
+package edu.pitt.api.Postgres.controllers;
 
-import edu.pitt.api.neo4j.Config.AppKeys;
-import edu.pitt.api.neo4j.domain.Accident;
-import edu.pitt.api.neo4j.domain.User;
-import edu.pitt.api.neo4j.repository.AccidentRepository;
-import edu.pitt.api.neo4j.repository.AdminRepository;
-import edu.pitt.api.neo4j.repository.UserRepository;
-import edu.pitt.api.neo4j.security.JwtTokenProvider;
+import edu.pitt.api.Postgres.config.AppKeys;
+import edu.pitt.api.Postgres.models.Accidents;
+import edu.pitt.api.Postgres.models.User;
+import edu.pitt.api.Postgres.repository.AccidentRepository;
+import edu.pitt.api.Postgres.repository.AdminRepository;
+import edu.pitt.api.Postgres.repository.UserRepository;
+import edu.pitt.api.Postgres.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+
 @CrossOrigin
 @RestController
-@RequestMapping(AppKeys.NEO4J_API_PATH + "/admin")
+@RequestMapping(AppKeys.Postgres_API_PATH + "/admin")
 public class AdminController {
-
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -38,7 +36,7 @@ public class AdminController {
         try {
             String token = jwtTokenProvider.createToken(admin.get());
             HashMap<String, Object> result = new HashMap<>();
-            result.put("User", admin);
+            result.put("Neo4jUser", admin);
             result.put("token", token);
             return result;
         } catch (AuthenticationException e) {
@@ -52,7 +50,7 @@ public class AdminController {
         User Admin = adminRepository.findOneByUsernameAndPassword(body.username, body.password);
 
         if (!admin.isPresent()) {
-            return ResponseEntity.badRequest().body("User username and password mismatch");
+            return ResponseEntity.badRequest().body("Neo4jUser username and password mismatch");
         }
         if (Admin == null || !Admin.getIsAdmin()) {
             return ResponseEntity.badRequest().body("You are not admin");
@@ -63,20 +61,20 @@ public class AdminController {
 
     @GetMapping("/allUsers")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Iterable<User> getAllUser() {
+    public List<User> getAllUser() {
         return userRepository.findAll();
     }
 
     @GetMapping("/allAccidents")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Accident> getRecent100Reports() {
+    public List<Accidents> getRecent100Reports() {
         return accidentRepository.findFirst100OrderByStartTimeDesc();
     }
 
     @PutMapping("/{reportId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Accident updateByReportId(@PathVariable Long reportId, @RequestBody Accident accidents) {
-        Accident oldAccident = accidentRepository.findOneById(reportId);
+    public Accidents updateByReportId(@PathVariable Long reportId, @RequestBody Accidents accidents) {
+        Accidents oldAccident = accidentRepository.findOneById(reportId);
         if (oldAccident == null) {
             throw new RuntimeException("No report is found");
         } else {
@@ -103,4 +101,6 @@ public class AdminController {
             throw new RuntimeException("No report is found");
         }
     }
+
+
 }

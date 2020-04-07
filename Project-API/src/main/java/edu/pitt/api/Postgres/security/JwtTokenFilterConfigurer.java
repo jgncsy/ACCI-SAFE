@@ -1,4 +1,4 @@
-package edu.pitt.api.neo4j.security;
+package edu.pitt.api.Postgres.security;
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

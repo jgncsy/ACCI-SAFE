@@ -1,6 +1,7 @@
-package edu.pitt.api.neo4j.security;
+package edu.pitt.api.Postgres.security;
 
-import edu.pitt.api.neo4j.domain.User;
+import edu.pitt.api.Postgres.models.User;
+import edu.pitt.api.neo4j.domain.Neo4jUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -42,6 +43,22 @@ public class JwtTokenProvider {
     }
 
     public String createToken(User user) {
+
+        Claims claims = Jwts.claims().setSubject(user.getUsername());
+        claims.put("auth", user.getRoles().stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
+
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + validityInMilliseconds);
+
+        return Jwts.builder()//
+                .setClaims(claims)//
+                .setIssuedAt(now)//
+                .setExpiration(validity)//
+                .signWith(SignatureAlgorithm.HS256, secretKey)//
+                .compact();
+    }
+
+    public String createToken(Neo4jUser user) {
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("auth", user.getRoles().stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));

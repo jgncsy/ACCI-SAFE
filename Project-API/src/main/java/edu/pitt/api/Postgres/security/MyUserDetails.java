@@ -1,12 +1,13 @@
-package edu.pitt.api.neo4j.security;
+package edu.pitt.api.Postgres.security;
 
-import edu.pitt.api.neo4j.domain.User;
-import edu.pitt.api.neo4j.repository.UserRepository;
+import edu.pitt.api.Postgres.models.User;
+import edu.pitt.api.Postgres.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class MyUserDetails implements UserDetailsService {
@@ -19,7 +20,7 @@ public class MyUserDetails implements UserDetailsService {
         final User user = userRepository.findOneByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User '" + username + "' not found");
+            throw new UsernameNotFoundException("Neo4jUser '" + username + "' not found");
         }
 
         return org.springframework.security.core.userdetails.User//

@@ -1,6 +1,6 @@
-package edu.pitt.api.neo4j.security;
+package edu.pitt.api.Postgres.security;
 
-import edu.pitt.api.neo4j.Config.AppKeys;
+import edu.pitt.api.Postgres.config.AppKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,14 +34,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests()//
-                .antMatchers(AppKeys.NEO4J_API_PATH+"/user/login").permitAll()//
-                .antMatchers(AppKeys.NEO4J_API_PATH+"/user/signup").permitAll()//
-                .antMatchers(AppKeys.NEO4J_API_PATH+"/admin/login").permitAll()//
-                .antMatchers(AppKeys.NEO4J_API_PATH+"/accident/**").permitAll()//
+                .antMatchers(AppKeys.Postgres_API_PATH+"/user/login").permitAll()//
+                .antMatchers(AppKeys.Postgres_API_PATH+"/user/signup").permitAll()//
+                .antMatchers(AppKeys.Postgres_API_PATH+"/admin/login").permitAll()//
+                .antMatchers(AppKeys.Postgres_API_PATH+"/accident/**").permitAll()//
+                .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH +"/user/login").permitAll()//
+                .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/user/signup").permitAll()//
+                .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/admin/login").permitAll()//
+                .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/accident/**").permitAll()//
                 // Disallow everything else..
                 .anyRequest().authenticated();
 
-        // If a User try to access a resource without having enough permissions
+        // If a Neo4jUser try to access a resource without having enough permissions
         http.exceptionHandling().accessDeniedPage("/login");
 
         // Apply JWT

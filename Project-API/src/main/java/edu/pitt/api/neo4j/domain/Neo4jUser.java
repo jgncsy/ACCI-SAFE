@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @NodeEntity
-public class User {
+public class Neo4jUser {
 
     @Id
     @GeneratedValue
@@ -32,11 +32,11 @@ public class User {
     boolean isAnonymous;
 
     @JsonIgnore
-    public List<Role> getRoles() {
+    public List<Neo4jRole> getRoles() {
         if (isAdmin) {
-            return Arrays.asList(Role.ROLE_ADMIN);
+            return Arrays.asList(Neo4jRole.ROLE_ADMIN);
         } else {
-            return Arrays.asList(Role.ROLE_CLIENT);
+            return Arrays.asList(Neo4jRole.ROLE_CLIENT);
         }
     }
 

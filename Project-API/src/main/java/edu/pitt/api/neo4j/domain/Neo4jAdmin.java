@@ -1,5 +1,5 @@
 package edu.pitt.api.neo4j.domain;
 
-public class Admin {
+public class Neo4jAdmin {
 
 }

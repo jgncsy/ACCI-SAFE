@@ -1,6 +1,6 @@
-package edu.pitt.api.neo4j.security;
+package edu.pitt.api.Postgres.security;
 
-import edu.pitt.api.neo4j.exception.CustomException;
+import edu.pitt.api.Postgres.exception.CustomException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 
 public class JwtTokenFilter extends OncePerRequestFilter {
 
@@ -28,7 +29,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch (CustomException ex) {
-            //this is very important, since it guarantees the User is not authenticated at all
+            //this is very important, since it guarantees the Neo4jUser is not authenticated at all
             SecurityContextHolder.clearContext();
             httpServletResponse.sendError(ex.getHttpStatus().value(), ex.getMessage());
             return;
