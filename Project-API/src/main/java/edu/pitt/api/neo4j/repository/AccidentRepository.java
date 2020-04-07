@@ -8,10 +8,19 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 
 @Repository
 public interface AccidentRepository extends Neo4jRepository<Accident,Long> {
+
+    List<Accident> findAllBySource(String username);
+
+    Accident findOneById(Long reportId);
+
+    @Query("match (p) return p order by p.starttime limit 100")
+    List<Accident> findFirst100OrderByStartTimeDesc();
+
     @Query("match (p) return p.state AS location, count(*) AS number")
     Collection<AccidentController.Count> accidentCountByState();
 

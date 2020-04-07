@@ -12,7 +12,14 @@ public class Accident {
     @GeneratedValue
     private Long id;
 
-    private String identify;
+    private String source;
+    private String latitude;
+    private String longitude;
+    private String description;
+
+    private String zipcode;
+    private String starttime;
+
     private String city;
     private String country;
     private float  humidity;
@@ -22,6 +29,56 @@ public class Accident {
     private String weatherCondition;
     private String street;
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(String starttime) {
+        this.starttime = starttime;
+    }
+
+
+
     public Long getId() {
         return id;
     }
@@ -30,13 +87,7 @@ public class Accident {
         this.id = id;
     }
 
-    public String getIdentify() {
-        return identify;
-    }
 
-    public void setIdentify(String identify) {
-        this.identify = identify;
-    }
 
     public String getCity() {
         return city;

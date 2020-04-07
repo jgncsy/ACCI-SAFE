@@ -13,6 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +62,7 @@ public class AdminController {
 
     @GetMapping("/allUsers")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<User> getAllUser() {
+    public Iterable<User> getAllUser() {
         return userRepository.findAll();
     }
 
