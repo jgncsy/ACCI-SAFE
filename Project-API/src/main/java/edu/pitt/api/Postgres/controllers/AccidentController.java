@@ -46,7 +46,7 @@ public class AccidentController {
         return accidentRepository.countByWeatherCondition();
     }
 
-    public class count {
+    public static class count {
         String location;
         int number;
 

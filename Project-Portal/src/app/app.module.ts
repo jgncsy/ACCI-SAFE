@@ -3,13 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import {UsMapModule} from 'angular-us-map'
+import { HomepageComponent } from './home-page/homepage.component';
+import {UsMapModule} from 'angular-us-map';
+import { LoginPageComponent } from './login-page/login-page.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomepageComponent
+    HomepageComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
