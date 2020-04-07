@@ -1,5 +1,6 @@
 package edu.pitt.api.Postgres.security;
 
+import edu.pitt.api.Postgres.config.AppKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,10 +34,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests()//
-                .antMatchers("/api/user/login").permitAll()//
-                .antMatchers("/api/user/signup").permitAll()//
-                .antMatchers("/api/admin/login").permitAll()//
-                .antMatchers("/api/accident/*").permitAll()//
+                .antMatchers(AppKeys.Postgres_API_PATH+"/user/login").permitAll()//
+                .antMatchers(AppKeys.Postgres_API_PATH+"/user/signup").permitAll()//
+                .antMatchers(AppKeys.Postgres_API_PATH+"/admin/login").permitAll()//
+                .antMatchers(AppKeys.Postgres_API_PATH+"/accident/**").permitAll()//
                 // Disallow everything else..
                 .anyRequest().authenticated();
 

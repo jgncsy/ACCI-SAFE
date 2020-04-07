@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping(AppKeys.API_PATH + "/admin")
+@RequestMapping(AppKeys.Postgres_API_PATH + "/admin")
 public class AdminController {
     @Autowired
     UserRepository userRepository;
@@ -59,7 +59,7 @@ public class AdminController {
 
     }
 
-    @GetMapping("/allUser")
+    @GetMapping("/allUsers")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<User> getAllUser() {
         return userRepository.findAll();
@@ -82,7 +82,7 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping("/{reportId}")
+    @DeleteMapping("/report/{reportId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteAccidentsById(@PathVariable Long reportId) {
         try {
@@ -92,7 +92,7 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping("/{username}")
+    @DeleteMapping("/user/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteUserbyUsername(@PathVariable String username) {
         try {
