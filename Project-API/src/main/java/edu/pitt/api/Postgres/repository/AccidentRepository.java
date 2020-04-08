@@ -1,16 +1,10 @@
 package edu.pitt.api.Postgres.repository;
-
-import com.sun.javafx.collections.MappingChange;
 import edu.pitt.api.Postgres.controllers.AccidentController;
 import edu.pitt.api.Postgres.models.Accidents;
-import edu.pitt.api.neo4j.controller.Neo4jAccidentController;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public interface AccidentRepository extends JpaRepository<Accidents, Long> {
     List<Accidents> findAllBySource(String username);
@@ -37,6 +31,6 @@ public interface AccidentRepository extends JpaRepository<Accidents, Long> {
     List<AccidentController.CountHumidityImp> countByHumidity();
 
 
-    @Query("select a.weathercondition as weathercondition, count(a) as number from Accidents a group by a.weathercondition")
+    @Query("select a.weathercondition as weatherCondition, count(a) as number from Accidents a group by a.weathercondition")
     List<AccidentController.CountWeatherConditionImp> countByWeatherCondition();
 }
