@@ -5,7 +5,7 @@ import {Observable, Subject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AlertServiceService {
+export class AlertService {
   private subject = new Subject<any>();
   private changed = false;
 

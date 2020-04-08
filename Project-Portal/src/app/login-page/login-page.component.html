@@ -1,5 +1,7 @@
 <div class="form-gap"></div>
+<app-alert></app-alert>
 <div class="container">
+  <div *ngIf="message" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">{{message.text.error.message}}</div>
   <div class="row align-items-center">
     <div class="col"></div>
     <div align="center" class="col">

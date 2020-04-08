@@ -10,12 +10,14 @@ import {HomepageComponent} from './home-page/homepage.component';
 import {UsMapModule} from 'angular-us-map';
 import {LoginPageComponent} from './login-page/login-page.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
