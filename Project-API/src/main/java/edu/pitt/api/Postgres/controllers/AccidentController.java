@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin
 @RestController
 @RequestMapping(AppKeys.Postgres_API_PATH + "/accident")
 public class AccidentController {

@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 
-@CrossOrigin
 @RestController
 @RequestMapping(AppKeys.Postgres_API_PATH + "/admin")
 public class AdminController {
@@ -34,9 +33,9 @@ public class AdminController {
 
     static Object getObject(Optional<User> admin, JwtTokenProvider jwtTokenProvider) {
         try {
-            String token = jwtTokenProvider.createToken(admin.get());
+            String token = jwtTokenProvider.createUserToken(admin.get());
             HashMap<String, Object> result = new HashMap<>();
-            result.put("Neo4jUser", admin);
+            result.put("user", admin);
             result.put("token", token);
             return result;
         } catch (AuthenticationException e) {
@@ -50,7 +49,7 @@ public class AdminController {
         User Admin = adminRepository.findOneByUsernameAndPassword(body.username, body.password);
 
         if (!admin.isPresent()) {
-            return ResponseEntity.badRequest().body("Neo4jUser username and password mismatch");
+            return ResponseEntity.badRequest().body("User username and password mismatch");
         }
         if (Admin == null || !Admin.getIsAdmin()) {
             return ResponseEntity.badRequest().body("You are not admin");

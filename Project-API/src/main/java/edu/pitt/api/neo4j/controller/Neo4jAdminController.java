@@ -35,7 +35,7 @@ public class Neo4jAdminController {
 
     static Object getObject(Optional<Neo4jUser> admin, JwtTokenProvider neo4jJwtTokenProvider) {
         try {
-            String token = neo4jJwtTokenProvider.createToken(admin.get());
+            String token = neo4jJwtTokenProvider.createNeo4jToken(admin.get());
             HashMap<String, Object> result = new HashMap<>();
             result.put("Neo4jUser", admin);
             result.put("token", token);

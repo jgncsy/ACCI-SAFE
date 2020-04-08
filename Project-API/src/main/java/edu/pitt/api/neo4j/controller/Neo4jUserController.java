@@ -43,7 +43,7 @@ public class Neo4jUserController {
         if (exsitingNeo4jUser != null) {
             throw new RuntimeException("username already exists");
         } else {
-            String token = neo4jJwtTokenProvider.createToken(neo4jUser);
+            String token = neo4jJwtTokenProvider.createNeo4jToken(neo4jUser);
 
             HashMap<String, Object> result = new HashMap<>();
             result.put("neo4jUser", neo4jUserRepository.save(neo4jUser));

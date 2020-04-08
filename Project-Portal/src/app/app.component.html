@@ -47,7 +47,8 @@
               <a class="dropdown-item" href="#">Self-Report</a>
               <a class="dropdown-item" href="#">Settings</a>
               <div class="dropdown-divider"></div>
-              <a  class="dropdown-item" href="/login">Login/Sign Up</a>
+              <a *ngIf="!this.authenticationService.currentUserValue" class="dropdown-item" href="/login">Login/Sign Up</a>
+              <a *ngIf="this.authenticationService.currentUserValue" class="dropdown-item" (click)="authenticationService.logout()">Logout</a>
             </div>
           </li>
         </ul>

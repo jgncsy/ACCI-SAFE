@@ -42,7 +42,7 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(User user) {
+    public String createUserToken(User user) {
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("auth", user.getRoles().stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
@@ -58,7 +58,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String createToken(Neo4jUser user) {
+    public String createNeo4jToken(Neo4jUser user) {
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("auth", user.getRoles().stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));

@@ -33,7 +33,8 @@ public class UserController {
     public Object Userlogin(@RequestBody LoginBody body) {
         Optional<User> tempuser = userRepository.findOneByUsernameAndPassword(body.username, body.password);
         if (!tempuser.isPresent()) {
-            return ResponseEntity.badRequest().body("Neo4jUser username and password mismatch");
+//            return ResponseEntity.badRequest().body("User username and password mismatch");
+            throw new RuntimeException("User username and password mismatch");
         }
         return AdminController.getObject(tempuser, jwtTokenProvider);
     }
@@ -44,7 +45,7 @@ public class UserController {
         if (exsitingUser != null) {
             throw new RuntimeException("username already exists");
         } else {
-            String token = jwtTokenProvider.createToken(user);
+            String token = jwtTokenProvider.createUserToken(user);
 
             HashMap<String, Object> result = new HashMap<>();
             result.put("user", userRepository.save(user));
