@@ -22,10 +22,10 @@ public class Neo4jAccident {
 
     private String city;
     private String country;
-    private float  humidity;
+    private Double  humidity;
     private String state;
     private String county;
-    private float visibility;
+    private Double visibility;
     private String weatherCondition;
     private String street;
 
@@ -105,11 +105,11 @@ public class Neo4jAccident {
         this.country = country;
     }
 
-    public float getHumidity() {
+    public Double getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(float humidity) {
+    public void setHumidity(Double humidity) {
         this.humidity = humidity;
     }
 
@@ -129,11 +129,11 @@ public class Neo4jAccident {
         this.county = county;
     }
 
-    public float getVisibility() {
+    public Double getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(float visibility) {
+    public void setVisibility(Double visibility) {
         this.visibility = visibility;
     }
 

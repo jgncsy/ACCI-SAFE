@@ -5,12 +5,14 @@ import edu.pitt.api.neo4j.Config.AppKeys;
 import edu.pitt.api.neo4j.domain.Neo4jAccident;
 import edu.pitt.api.neo4j.service.Neo4jAccidentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.annotation.QueryResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping(AppKeys.NEO4J_API_PATH + "/accident")
@@ -20,134 +22,127 @@ public class Neo4jAccidentController {
     Neo4jAccidentService neo4jAccidentService;
 
     @GetMapping("/numbersByState")
-    public ResponseEntity<?> getNumbersByState(){
-        Collection<Object> results = neo4jAccidentService.countByState();
-        System.out.println(results);
-        return new ResponseEntity<Object>(results,HttpStatus.OK);
+    public List<Count> getNumbersByState(){
+        return neo4jAccidentService.countByState();
     }
 
 
 
     @GetMapping(value = "/numbersByCounty/{state}")
-    public ResponseEntity<?> getNumbersByCounty(@PathVariable String state){
-        Collection<Object> results = neo4jAccidentService.countByCounty(state);
-        return new ResponseEntity<Object>(results,HttpStatus.OK);
+    public List<Count> getNumbersByCounty(@PathVariable String state){
+        return neo4jAccidentService.countByCounty(state);
     }
 
     @GetMapping(value = "/accidentsByRoad/{state}/{city}/{road}")
-    public ResponseEntity<?> getAccidentsByRoad(@PathVariable String state, @PathVariable String city, @PathVariable String road) {
+    public List<Neo4jAccident> getAccidentsByRoad(@PathVariable String state, @PathVariable String city, @PathVariable String road) {
 
-        Collection<Neo4jAccident> results = neo4jAccidentService.getAccidentByRoad(state,city,road);
-        return new ResponseEntity<Object>(results,HttpStatus.OK);
+        return neo4jAccidentService.getAccidentByRoad(state,city,road);
     }
 
     @GetMapping(value = "/numbersByVisibility")
-    public ResponseEntity<?> getNumbersByVisibility(){
-        Collection<Object> results = neo4jAccidentService.countByvisibility();
-        return new ResponseEntity<Object>(results,HttpStatus.OK);
+    public List<CountVisibility> getNumbersByVisibility(){
+        return neo4jAccidentService.countByvisibility();
     }
 
     @GetMapping(value = "/numbersByHumidity")
-    public ResponseEntity<?> getNumbersByHumidity(){
-        Collection<Object> results = neo4jAccidentService.countByHumidity();
-        return new ResponseEntity<Object>(results,HttpStatus.OK);
+    public List<CountHumidity> getNumbersByHumidity(){
+        return neo4jAccidentService.countByHumidity();
     }
 
     @GetMapping(value = "/numbersByWeatherCondition")
-    public ResponseEntity<?> getNumbersByWeatherCondition(){
-        Collection<Object> results = neo4jAccidentService.countByWeatherCondition();
-        return new ResponseEntity<Object>(results,HttpStatus.OK);
+    public List<CountWeatherCondition> getNumbersByWeatherCondition(){
+        return neo4jAccidentService.countByWeatherCondition();
     }
 
 
 
-//    @QueryResult
-//    public class Count {
-//        String location;
-//        int number;
-//
-//        public String getLocation(){
-//            return location;
-//        }
-//
-//        public void setLocation(String location) {
-//            this.location = location;
-//        }
-//
-//        public int getNumber() {
-//            return number;
-//        }
-//
-//        public void setNumber(int number) {
-//            this.number = number;
-//        }
-//    }
-//
-//    @QueryResult
-//    public class CountVisibility {
-//        float visibility;
-//        int number;
-//
-//        public float getVisibility() {
-//            return visibility;
-//        }
-//
-//        public void setVisibility(float visibility) {
-//            this.visibility = visibility;
-//        }
-//
-//        public int getNumber() {
-//            return number;
-//        }
-//
-//        public void setNumber(int number) {
-//            this.number = number;
-//        }
-//    }
-//
-//    @QueryResult
-//    public class CountHumidity {
-//        float humidity;
-//        int number;
-//
-//        public float getHumidity() {
-//            return humidity;
-//        }
-//
-//        public void setHumidity(float humidity) {
-//            this.humidity = humidity;
-//        }
-//
-//        public int getNumber() {
-//            return number;
-//        }
-//
-//        public void setNumber(int number) {
-//            this.number = number;
-//        }
-//    }
-//
-//    @QueryResult
-//    public class CountWeatherCondition {
-//        String weatherCondition;
-//        int number;
-//
-//        public String getWeatherCondition() {
-//            return weatherCondition;
-//        }
-//
-//        public void setWeatherCondition(String weatherCondition) {
-//            this.weatherCondition = weatherCondition;
-//        }
-//
-//        public int getNumber() {
-//            return number;
-//        }
-//
-//        public void setNumber(int number) {
-//            this.number = number;
-//        }
-//    }
+    @QueryResult
+    public static class Count {
+        String location;
+        int number;
+
+        public int getNumber() {
+            return number;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setNumber(int number) {
+            this.number = number;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+    }
+
+    @QueryResult
+    public class CountVisibility {
+        Double visibility;
+        int number;
+
+        public Double getVisibility() {
+            return visibility;
+        }
+
+        public void setVisibility(Double visibility) {
+            this.visibility = visibility;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public void setNumber(int number) {
+            this.number = number;
+        }
+    }
+
+    @QueryResult
+    public  class CountHumidity {
+        Double humidity;
+        int number;
+
+        public Double getHumidity() {
+            return humidity;
+        }
+
+        public void setHumidity(Double humidity) {
+            this.humidity = humidity;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public void setNumber(int number) {
+            this.number = number;
+        }
+    }
+
+    @QueryResult
+    public class CountWeatherCondition {
+        String weatherCondition;
+        int number;
+
+        public String getWeatherCondition() {
+            return weatherCondition;
+        }
+
+        public void setWeatherCondition(String weatherCondition) {
+            this.weatherCondition = weatherCondition;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public void setNumber(int number) {
+            this.number = number;
+        }
+    }
 
 
 

@@ -1,5 +1,6 @@
 package edu.pitt.api.neo4j.repository;
 
+import edu.pitt.api.neo4j.controller.Neo4jAccidentController;
 import edu.pitt.api.neo4j.domain.Neo4jAccident;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
@@ -21,22 +22,22 @@ public interface Neo4jAccidentRepository extends Neo4jRepository<Neo4jAccident,L
     List<Neo4jAccident> findFirst100OrderByStartTimeDesc();
 
     @Query("match (p) return p.state AS location, count(*) AS number")
-    Collection<Object> accidentCountByState();
+    List<Neo4jAccidentController.Count> accidentCountByState();
 
-    @Query("match (p:Accident{state:$state}) return p.county AS location, count(*) AS number")
-    Collection<Object> countByCounty(@Param("state") String state);
+    @Query("match (p) where p.state=$state return p.county AS location, count(*) AS number")
+    List<Neo4jAccidentController.Count> countByCounty(@Param("state") String state);
 
     @Query("match (p) where p.city= $city and p.state=$state and p.street =$street return p")
-    Collection<Neo4jAccident> getAccidentsByRoad(@Param("state") String state, @Param("city") String city, @Param("street") String street);
+    List<Neo4jAccident> getAccidentsByRoad(@Param("state") String state, @Param("city") String city, @Param("street") String street);
 
     @Query("match(p) return p.visibility AS visibility,count(*) AS number")
-    Collection<Object> countByVisibility();
+    List<Neo4jAccidentController.CountVisibility> countByVisibility();
 
 
     @Query("match(p) return p.humidity AS humidity, count(*) AS number")
-    Collection<Object> countByHumidity();
+    List<Neo4jAccidentController.CountHumidity> countByHumidity();
 
 
     @Query("match(p) return p.weatherCondition AS weatherCondition, count(*) AS number")
-    Collection<Object> countByWeatherCondition();
+    List<Neo4jAccidentController.CountWeatherCondition> countByWeatherCondition();
 }
