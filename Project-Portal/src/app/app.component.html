@@ -43,11 +43,9 @@
               </svg>
             </a>
             <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="#">My Account</a>
-              <a class="dropdown-item" href="#">Self-Report</a>
-              <a class="dropdown-item" href="#">Settings</a>
+              <a class="dropdown-item" href="/user/myaccount">My Account</a>
               <div class="dropdown-divider"></div>
-              <a *ngIf="!this.authenticationService.currentUserValue" class="dropdown-item" href="/login">Login/Sign Up</a>
+              <a *ngIf="!this.authenticationService.currentUserValue" class="dropdown-item" href="/user/login">Login/Sign Up</a>
               <a *ngIf="this.authenticationService.currentUserValue" class="dropdown-item" (click)="authenticationService.logout()">Logout</a>
             </div>
           </li>
@@ -95,17 +93,17 @@
         <ul class="list-unstyled">
           <li>
             <p>
-              <a class="link-unstyled" href="#!">PROJECTS</a>
+              <a class="link-unstyled" href="https://github.com/SimonXu0811/INFSCI2711-FINAL#infsci2711-final" target="_blank">PROJECTS</a>
             </p>
           </li>
           <li>
             <p>
-              <a class="link-unstyled" href="#!">TEAMS</a>
+              <a class="link-unstyled" href="https://github.com/SimonXu0811/INFSCI2711-FINAL#contributors" target="_blank">TEAMS</a>
             </p>
           </li>
           <li>
             <p>
-              <a class="link-unstyled" href="#!">DATA SOURCE</a>
+              <a class="link-unstyled" href="https://www.kaggle.com/sobhanmoosavi/us-accidents" target="_blank">DATA SOURCE</a>
             </p>
           </li>
           <li>

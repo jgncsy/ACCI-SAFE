@@ -43,6 +43,15 @@ export class AuthenticationService {
 
   }
 
+  register(username: string, password: string, email: string, phonenumber: string, city: string, state: string) {
+    return this.http.post<any>(`${environment.PostgresApi}/user/signup`, {username, password, email, phonenumber, city, state})
+      .pipe(map(user => {
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+        return user;
+      }));
+  }
+
 
   logout() {
     sessionStorage.removeItem('currentUser');

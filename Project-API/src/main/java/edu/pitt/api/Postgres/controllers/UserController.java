@@ -33,8 +33,8 @@ public class UserController {
     public Object Userlogin(@RequestBody LoginBody body) {
         Optional<User> tempuser = userRepository.findOneByUsernameAndPassword(body.username, body.password);
         if (!tempuser.isPresent()) {
-//            return ResponseEntity.badRequest().body("User username and password mismatch");
-            throw new RuntimeException("User username and password mismatch");
+            return ResponseEntity.badRequest().body("User username and password mismatch");
+//            throw new RuntimeException("User username and password mismatch");
         }
         return AdminController.getObject(tempuser, jwtTokenProvider);
     }

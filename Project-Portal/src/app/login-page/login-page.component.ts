@@ -24,7 +24,7 @@ export class LoginPageComponent implements OnInit {
               private alertService: AlertService,
               private authentication: AuthenticationService) {
     if (this.authentication.currentUserValue) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     }
   }
 
@@ -37,9 +37,6 @@ export class LoginPageComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-
-
-    this.returnUrl =  '/';
   }
 
   onSubmit() {
@@ -52,11 +49,12 @@ export class LoginPageComponent implements OnInit {
     this.loading = true;
     this.authentication.login(this.f.username.value, this.f.password.value, false).pipe(first()).subscribe(
       data => {
-      this.router.navigate(['/']);
+        this.router.navigate(['/']);
     },
 error => {
-      this.alertService.error(error.error.message);
-      this.loading = false;
+        this.message = error.error.message == null ? error.error: error.error.message;
+        this.alertService.error(this.message);
+        this.loading = false;
     });
   }
 
