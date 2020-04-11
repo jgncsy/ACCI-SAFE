@@ -3,14 +3,11 @@ package edu.pitt.api.Postgres.controllers;
 import edu.pitt.api.Postgres.config.AppKeys;
 import edu.pitt.api.Postgres.models.Accidents;
 import edu.pitt.api.Postgres.repository.AccidentRepository;
-import edu.pitt.api.neo4j.controller.Neo4jAccidentController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.annotation.QueryResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(AppKeys.Postgres_API_PATH + "/accident")
@@ -52,35 +49,35 @@ public class AccidentController {
 
     @QueryResult
     public class Count implements CountImp {
-        String location;
-        int number;
+        String id;
+        int value;
 
-        public int getNumber() {
-            return number;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public String getLocation() {
-            return location;
+        public int getValue() {
+            return value;
         }
 
-        public void setNumber(int number) {
-            this.number = number;
+        public String getId() {
+            return id;
         }
 
-        public void setLocation(String location) {
-            this.location = location;
+        public void setValue(int value) {
+            this.value = value;
         }
     }
 
     public interface CountImp {
-        String getLocation();
-        void setNumber(int number);
-        void setLocation(String location);
-        int getNumber();
+        void setId(String id);
+        int getValue();
+        String getId();
+        void setValue(int value);
     }
 
     @QueryResult
-    public class CountVisibility implements CountVisibilityImp  {
+    public static class CountVisibility implements CountVisibilityImp  {
         Double visibility;
         int number;
 

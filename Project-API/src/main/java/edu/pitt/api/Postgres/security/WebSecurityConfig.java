@@ -36,10 +36,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()//
                 .antMatchers(AppKeys.Postgres_API_PATH+"/user/login").permitAll()//
                 .antMatchers(AppKeys.Postgres_API_PATH+"/user/signup").permitAll()//
+                .antMatchers(AppKeys.Postgres_API_PATH+"/user/infoCheck").permitAll()//
+                .antMatchers(AppKeys.Postgres_API_PATH+"/user/updatePassword/**").permitAll()//
                 .antMatchers(AppKeys.Postgres_API_PATH+"/admin/login").permitAll()//
                 .antMatchers(AppKeys.Postgres_API_PATH+"/accident/**").permitAll()//
                 .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH +"/user/login").permitAll()//
                 .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/user/signup").permitAll()//
+                .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/user/infoCheck").permitAll()//
+                .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/user/updatePassword/**").permitAll()//
                 .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/admin/login").permitAll()//
                 .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/accident/**").permitAll()//
                 // Disallow everything else..

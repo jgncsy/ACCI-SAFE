@@ -1,3 +1,22 @@
 <div class="container">
-  <us-map fillStateColor="#808080" (onMapClick)="$event"></us-map>
+  <div class="card card-accent-info">
+    <div class="card-body">
+      <div class="mt-4">
+
+
+        <fusioncharts
+          [dataSource]="dataSource"
+          dataFormat="json"
+          height="600"
+          type="maps/usa"
+          width="1000"
+        >
+        </fusioncharts>
+
+
+      </div>
+    </div>
+  </div>
+
+
 </div>

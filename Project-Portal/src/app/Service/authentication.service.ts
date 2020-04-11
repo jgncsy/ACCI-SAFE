@@ -52,10 +52,20 @@ export class AuthenticationService {
       }));
   }
 
+  restPassword(username: string, password: string) {
+    return this.http.put<any>(`${environment.PostgresApi}/user/updatePassword/${username}`, {password})
+      .pipe(map(user => {
+        sessionStorage.removeItem('currentUserName');
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+        return user;
+      }));
+  }
+
 
   logout() {
     sessionStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.router.navigate(['login']);
+    this.router.navigate(['user/login']);
   }
 }

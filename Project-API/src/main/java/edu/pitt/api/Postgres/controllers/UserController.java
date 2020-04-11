@@ -55,7 +55,7 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "/infoCheck")
+    @PostMapping(value = "/infoCheck")
     public User infoCheck(@RequestBody User user) {
         User exsitingUser = userRepository.findOneByUsernameAndCityAndStateAndEmailAndPhonenumber(user.getUsername(), user.getCity(), user.getState(), user.getEmail(), user.getPhonenumber());
         if (exsitingUser == null) {
@@ -66,13 +66,18 @@ public class UserController {
     }
 
     @PutMapping(value = "/updatePassword/{username}")
-    public User restPassword(@PathVariable String username, @RequestBody User user) {
+    public Object restPassword(@PathVariable String username, @RequestBody User user) {
         User oldUser = userRepository.findOneByUsername(username);
         if (oldUser == null) {
             throw new RuntimeException("username doesn't exist");
         } else {
             oldUser.setPassword(user.getPassword());
-            return userRepository.save(oldUser);
+            String token = jwtTokenProvider.createUserToken(oldUser);
+
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("user", userRepository.save(oldUser));
+            result.put("token", token);
+            return result;
         }
     }
 
