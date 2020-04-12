@@ -39,7 +39,8 @@
             </div>
           </div>
         </form>
-        <div class="mt-4">
+        <img *ngIf="loading" class="pl-3" src="https://media.giphy.com/media/2uJ0EhZnMAMDe/giphy.gif" width="1000" height="600" />
+        <div *ngIf="!loading" class="mt-4">
           <agm-map [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="location.zoom" [zoomControl]="false" [streetViewControl]="false">
           <agm-marker *ngFor="let marker of roadList" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
           </agm-map>

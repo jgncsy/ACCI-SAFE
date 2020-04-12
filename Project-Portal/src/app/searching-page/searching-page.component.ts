@@ -97,11 +97,14 @@ export class SearchingPageComponent implements OnInit {
       state: ['', Validators.required]
     });
 
+
     this.location = {
       latitude: 37.5703914,
       longitude: -101.7381144,
       zoom: 5
     };
+
+
   }
 
   onSubmit() {
@@ -114,7 +117,11 @@ export class SearchingPageComponent implements OnInit {
     this.loading = true;
     this.accidentService.getRoadInfo(this.f.state.value, this.f.city.value, this.f.road.value).subscribe(data => {
       this.roadList = data;
-      console.log(this.roadList);
+      this.location = {
+        latitude: this.roadList[0].latitude,
+        longitude: this.roadList[0].longitude,
+        zoom: 12
+      };
       this.loading = false;
     }, error => {
       this.message = error.error.message == null ? error.error : error.error.message;

@@ -16,8 +16,10 @@ export class HomepageComponent implements OnInit {
   colorrange: object;
   data: Data[];
   dataSource: any;
+  loading: boolean;
 
   constructor(private http: HttpClient) {
+    this.loading = true;
 
     this.chart = {
       caption: 'States with Accident Numbers',
@@ -100,6 +102,7 @@ export class HomepageComponent implements OnInit {
       }
     ;
     getData().then(temp => {
+      this.loading = false;
       this.dataSource.data = temp;
     });
     this.dataSource = dataSource;
