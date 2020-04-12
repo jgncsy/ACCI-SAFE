@@ -120,7 +120,7 @@ export class SearchingPageComponent implements OnInit {
       this.location = {
         latitude: this.roadList[0].latitude,
         longitude: this.roadList[0].longitude,
-        zoom: 12
+        zoom: 13
       };
       this.loading = false;
     }, error => {
