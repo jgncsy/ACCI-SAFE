@@ -35,7 +35,7 @@ export class AuthenticationService {
     } else {
       return this.http.post<any>(`${environment.PostgresApi}/admin/login`, {username, password})
         .pipe(map(admin => {
-          sessionStorage.setItem('currentUser', JSON.stringify(admin));
+          sessionStorage.setItem('currentAdmin', JSON.stringify(admin));
           this.currentUserSubject.next(admin);
           return admin;
         }));
@@ -63,9 +63,15 @@ export class AuthenticationService {
   }
 
 
-  logout() {
+  Userlogout() {
     sessionStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this.router.navigate(['user/login']);
+  }
+
+  Adminlogout() {
+    sessionStorage.removeItem('currentAdmin');
+    this.currentUserSubject.next(null);
+    this.router.navigate(['admin/login']);
   }
 }

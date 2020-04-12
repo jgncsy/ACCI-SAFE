@@ -12,7 +12,7 @@ export class AccidentService {
   }
 
   getRoadInfo(state: string, city: string, road: string) {
-    return this.http.get<Marker[]>(`${environment.PostgresApi}/accident/accidentsByRoad/${state}/${city}/${road}`);
+    return this.http.get<Marker[]>(`${environment.PostgresApi}/accident/accidentsByRoad/${state}/${city.trim()}/${road}`);
   }
 }
 

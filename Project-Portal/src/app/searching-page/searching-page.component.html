@@ -2,6 +2,7 @@
   <div class="container">
     <app-alert></app-alert>
     <div class="card card-accent-info">
+      <h5 class="card-header">Enter S in Road to see all records in city</h5>
       <div class="card-body">
         <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
           <div class="row">
@@ -39,7 +40,7 @@
           </div>
         </form>
         <div class="mt-4">
-          <agm-map [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="location.zoom" [zoomControl]="false">
+          <agm-map [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="location.zoom" [zoomControl]="false" [streetViewControl]="false">
           <agm-marker *ngFor="let marker of roadList" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
           </agm-map>
 

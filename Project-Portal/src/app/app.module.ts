@@ -27,6 +27,8 @@ import * as Maps from 'fusioncharts/fusioncharts.maps';
 import * as USA from 'fusioncharts/maps/fusioncharts.usa';
 import {SearchingPageComponent} from './searching-page/searching-page.component';
 import {environment} from '../environments/environment';
+import { AdminDashboardPageComponent } from './admin-dashboard-page/admin-dashboard-page.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 
 // Pass the fusioncharts library and chart modules
@@ -42,7 +44,9 @@ FusionChartsModule.fcRoot(FusionCharts, charts, Maps, FusionTheme, USA);
     MyaccountPageComponent,
     ForgetpasswordPageComponent,
     VirtualizationPageComponent,
-    SearchingPageComponent
+    SearchingPageComponent,
+    AdminDashboardPageComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import edu.pitt.api.Postgres.exception.CustomException;
 import edu.pitt.api.Postgres.models.Accidents;
 import edu.pitt.api.Postgres.models.User;
 import edu.pitt.api.Postgres.repository.AccidentRepository;
+import edu.pitt.api.Postgres.repository.AdminRepository;
 import edu.pitt.api.Postgres.repository.UserRepository;
 import edu.pitt.api.Postgres.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,8 @@ public class UserController {
     UserRepository userRepository;
     @Autowired
     AccidentRepository accidentRepository;
+    @Autowired
+    AdminRepository adminRepository;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -32,10 +36,15 @@ public class UserController {
     @PostMapping(value = "/login")
     public Object Userlogin(@RequestBody LoginBody body) {
         Optional<User> tempuser = userRepository.findOneByUsernameAndPassword(body.username, body.password);
+        User user = adminRepository.findOneByUsernameAndPassword(body.username, body.password);
         if (!tempuser.isPresent()) {
             return ResponseEntity.badRequest().body("User username and password mismatch");
 //            throw new RuntimeException("User username and password mismatch");
         }
+        if (user == null || user.getIsAdmin()) {
+            return ResponseEntity.badRequest().body("You are Admin Please Use Admin Login Link");
+        }
+
         return AdminController.getObject(tempuser, jwtTokenProvider);
     }
 
