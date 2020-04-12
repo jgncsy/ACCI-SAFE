@@ -27,7 +27,7 @@ public class AccidentController {
     }
 
     @GetMapping(value = "/accidentsByRoad/{state}/{city}/{road}")
-    public List<Accidents> getAccidentsByRoad(@PathVariable String state, @PathVariable String city, @PathVariable String road) {
+    public List<RoadLocationImp> getAccidentsByRoad(@PathVariable String state, @PathVariable String city, @PathVariable String road) {
         return accidentRepository.getAccidentsByRoad(state,city,"%"+road+"%");
     }
 
@@ -162,6 +162,37 @@ public class AccidentController {
         void setWeatherCondition(String weatherCondition);
         int getNumber();
         void setNumber(int number);
+    }
+
+    @QueryResult
+    public class RoadLocation {
+        float latitude;
+        float longitude;
+
+        public void setLongitude(String longitude) {
+            if (longitude == null) return;
+            this.longitude = Float.parseFloat(longitude);
+        }
+
+        public void setLatitude(String latitude) {
+            if (latitude == null) return;
+            this.latitude = Float.parseFloat(latitude);
+        }
+
+        public float getLatitude() {
+            return latitude;
+        }
+
+        public float getLongitude() {
+            return longitude;
+        }
+    }
+
+    public interface RoadLocationImp {
+        float getLatitude();
+        float getLongitude();
+        void setLatitude(String latitude);
+        void setLongitude(String longitude);
     }
 
 }

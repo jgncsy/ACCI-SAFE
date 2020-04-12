@@ -21,7 +21,7 @@ export class HomepageComponent implements OnInit {
 
     this.chart = {
       caption: 'States with Accident Numbers',
-      subcaption: 'Since the year 2016',
+      subcaption: 'Since the year 2016 Feb',
       numbersuffix: '',
       theme: 'fusion',
       tooltipbgcolor: '#FFFFFF',
