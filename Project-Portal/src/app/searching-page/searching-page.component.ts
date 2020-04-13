@@ -1,34 +1,27 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AlertService} from '../Service/alert.service';
-import {UserService} from '../Service/user.service';
-import {AuthenticationService} from '../Service/authentication.service';
+import {AccidentService} from '../Service/accident.service';
 
 @Component({
-  selector: 'app-forgetpassword-page',
-  templateUrl: './forgetpassword-page.component.html',
-  styleUrls: ['./forgetpassword-page.component.css']
+  selector: 'app-searching-page',
+  templateUrl: './searching-page.component.html',
+  styleUrls: ['./searching-page.component.css']
 })
-export class ForgetpasswordPageComponent implements OnInit {
-  checkInfoForm: FormGroup;
-  resetPasswordForm: FormGroup;
-  loading: boolean;
-  resetloading: boolean;
-  submitted: boolean;
-  resetSubmitted: boolean;
-  message: any;
+export class SearchingPageComponent implements OnInit {
   map = new Map<string, string>();
   list: string[];
-  Approved: boolean;
+  searchForm: FormGroup;
+  message: any;
+  submitted: boolean;
+  loading: boolean;
+  location: Location;
+  roadList: Marker[];
+
 
   constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
               private alertService: AlertService,
-              private userService: UserService,
-              private authentication: AuthenticationService) {
-
+              private accidentService: AccidentService) {
     this.map.set('Alabama', 'AL');
     this.map.set('Alaska', 'AK');
     this.map.set('American Samoa', 'AS');
@@ -93,65 +86,60 @@ export class ForgetpasswordPageComponent implements OnInit {
   }
 
   get f() {
-    return this.checkInfoForm.controls;
+    return this.searchForm.controls;
   }
 
-  get r() {
-    return this.resetPasswordForm.controls;
-  }
 
   ngOnInit() {
-    this.Approved = false;
-    this.checkInfoForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phonenumber: ['', [Validators.required, Validators.pattern('^(\\(\\d{3}\\)|^\\d{3}[.-]?)?\\d{3}[.-]?\\d{4}$')]],
+    this.searchForm = this.formBuilder.group({
+      road: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required]
     });
 
-    this.resetPasswordForm = this.formBuilder.group({
-      password: ['', Validators.required],
-      reenter: ['', Validators.required]
-    });
+
+    this.location = {
+      latitude: 37.5703914,
+      longitude: -101.7381144,
+      zoom: 5
+    };
+
+
   }
 
   onSubmit() {
     this.submitted = true;
 
-    if (this.checkInfoForm.invalid) {
+
+    if (this.searchForm.invalid) {
       return;
     }
-
     this.loading = true;
-    this.userService.checkUserInfo(this.f.username.value, this.f.email.value,
-      this.f.phonenumber.value, this.f.city.value, this.f.state.value)
-      .subscribe(data => {
-          this.Approved = true;
-        },
-        error => {
-          this.message = error.error.message == null ? error.error : error.error.message;
-          this.alertService.error(this.message);
-          this.loading = false;
-        });
+    this.accidentService.getRoadInfo(this.f.state.value, this.f.city.value, this.f.road.value).subscribe(data => {
+      this.roadList = data;
+      this.location = {
+        latitude: this.roadList[0].latitude,
+        longitude: this.roadList[0].longitude,
+        zoom: 13
+      };
+      this.loading = false;
+    }, error => {
+      this.message = error.error.message == null ? error.error : error.error.message;
+      this.alertService.error(this.message);
+      this.loading = false;
+    });
+
   }
 
+}
 
-  onRestSubmit() {
-    this.resetSubmitted = true;
-    if (this.resetPasswordForm.invalid) {
-      return;
-    }
+interface Location {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+}
 
-
-    this.resetloading = true;
-    this.authentication.restPassword(this.userService.currentUserNameValue, this.r.password.value)
-      .subscribe(data => {
-        this.router.navigate(['/']);
-      }, error => {
-        this.message = error.error.message == null ? error.error : error.error.message;
-        this.alertService.error(this.message);
-        this.resetloading = false;
-      });
-  }
+interface Marker {
+  latitude: number;
+  longitude: number;
 }

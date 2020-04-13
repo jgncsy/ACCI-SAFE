@@ -22,7 +22,7 @@ export class AlertComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.subscription){
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
 

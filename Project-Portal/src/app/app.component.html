@@ -22,10 +22,10 @@
           <a class="nav-link" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Start</a>
+          <a class="nav-link" href="searching">Road Searching</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Visualization</a>
+          <a class="nav-link" href="virsualization">Factors Analysis</a>
         </li>
       </ul>
       <div class="inline my-2 my-lg-0">
@@ -45,8 +45,8 @@
             <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="/user/myaccount">My Account</a>
               <div class="dropdown-divider"></div>
-              <a *ngIf="!this.authenticationService.currentUserValue" class="dropdown-item" href="/user/login">Login/Sign Up</a>
-              <a *ngIf="this.authenticationService.currentUserValue" class="dropdown-item" (click)="authenticationService.logout()">Logout</a>
+              <a *ngIf="!this.authenticationService.currentUserValue || this.authenticationService.currentUserValue.user.isAdmin" class="dropdown-item" href="/user/login">Login/Sign Up</a>
+              <a *ngIf="this.authenticationService.currentUserValue && !this.authenticationService.currentUserValue.user.isAdmin" class="dropdown-item" (click)="authenticationService.Userlogout()">Logout</a>
             </div>
           </li>
         </ul>
@@ -64,7 +64,7 @@
 
 
 
-<footer *ngIf=!isLoginPage() class="page-footer font-small mdb-color lighten-3 pt-4">
+<footer *ngIf="!isLoginPage()" class="page-footer font-small mdb-color lighten-3 pt-4">
 
   <div class="bg-light">
   <div class="container text-center text-md-left ">
@@ -108,7 +108,7 @@
           </li>
           <li>
             <p>
-              <a class="link-unstyled" href="#!">ADMIN LOGIN</a>
+              <a class="link-unstyled" href="/admin/login">ADMIN LOGIN</a>
             </p>
           </li>
         </ul>

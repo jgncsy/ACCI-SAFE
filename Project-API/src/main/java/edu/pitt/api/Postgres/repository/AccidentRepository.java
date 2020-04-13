@@ -14,14 +14,14 @@ public interface AccidentRepository extends JpaRepository<Accidents, Long> {
     @Query(value = "select * from Accidents a order by a.starttime limit 100", nativeQuery = true)
     List<Accidents> findFirst100OrderByStartTimeDesc();
 
-    @Query(value = "select a.state as location, count(a) as number from Accidents a group by a.state")
+    @Query(value = "select a.state as id, count(a) as value from Accidents a group by a.state")
     List<AccidentController.CountImp> countByState();
 
     @Query("select a.county as location, count(a) as number from Accidents a where a.state=:state group by a.county")
     List<AccidentController.CountImp> countByCounty(@Param("state") String state);
 
-    @Query("select a from Accidents a where a.state =:state and a.city=:city and a.street like :street")
-    List<Accidents> getAccidentsByRoad(@Param("state") String state,@Param("city") String city,@Param("street") String street);
+    @Query("select a.latitude as latitude, a.longitude as longitude from Accidents a where a.state =:state and a.city=:city and a.street like :street")
+    List<AccidentController.RoadLocationImp> getAccidentsByRoad(@Param("state") String state, @Param("city") String city, @Param("street") String street);
 
     @Query("select a.visibility as visibility , count(a) as number from Accidents a group by a.visibility")
     List<AccidentController.CountVisibilityImp> countByVisibility();

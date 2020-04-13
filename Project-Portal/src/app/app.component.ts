@@ -16,7 +16,7 @@ export class AppComponent {
 
 
   isLoginPage() {
-    return this.router.url === '/user/login';
+    return this.router.url === '/user/login' || this.router.url === '/admin/dashboard' || this.router.url === '/admin/login' ;
   }
 
 }

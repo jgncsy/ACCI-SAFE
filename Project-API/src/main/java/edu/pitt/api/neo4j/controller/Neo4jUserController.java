@@ -53,7 +53,7 @@ public class Neo4jUserController {
     }
 
 
-    @GetMapping(value = "/infoCheck")
+    @PostMapping(value = "/infoCheck")
     public Neo4jUser infoCheck(@RequestBody Neo4jUser neo4jUser) {
         Neo4jUser exsitingNeo4jUser = neo4jUserRepository.findOneByUsernameAndCityAndStateAndEmailAndPhonenumber(neo4jUser.getUsername(), neo4jUser.getCity(), neo4jUser.getState(), neo4jUser.getEmail(), neo4jUser.getPhonenumber());
         if (exsitingNeo4jUser == null) {
