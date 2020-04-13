@@ -46,25 +46,44 @@
   <div class="col-lg-12">
     <div class='card' style="overflow-x:auto;">
       <div class="card-header text-center">
-        <h4>All registered users</h4>
+        <h4>All User Info</h4>
       </div>
+      <button class="inline" (click)="this.needUpdate = !this.needUpdate">edit</button>
       <table mdbTable class="table table-hover">
         <thead>
         <tr>
-          <th scope="col">No.</th>
-          <th scope="col">UserName</th>
-          <th scope="col">Role</th>
-          <th scope="col">Operations</th>
+          <th scope="col">User Name</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Email Address</th>
+          <th scope="col">City</th>
+          <th scope="col">State</th>
+          <th *ngIf="this.needUpdate" scope="col">Operations</th>
         </tr>
         </thead>
         <tbody>
-        <tr mdbTableCol *ngFor='let user of dataarray'>
-          <th scope="row">{{user.id}}</th>
-          <th scope="row">{{user.username}}</th>
-          <th *ngIf="user.isAdmin">Admin</th>
-          <th *ngIf="!user.isAdmin">User</th>
-          <td style='white-space: nowrap'>
-            <button type="button" class="btn btn-primary" (click)="ChangeRole(user.username)" >Change Role</button>
+        <tr mdbTableCol *ngFor='let user of users'>
+          <th *ngIf="!this.needUpdate" scope="row">{{user.username}}</th>
+          <th *ngIf="!this.needUpdate" scope="row">{{user.phonenumber}}</th>
+          <th *ngIf="!this.needUpdate" scope="row">{{user.email}}</th>
+          <th *ngIf="!this.needUpdate" scope="row">{{user.city}}</th>
+          <th *ngIf="!this.needUpdate" scope="row">{{user.state}}</th>
+          <th *ngIf="this.needUpdate" scope="row">
+            {{user.username}}
+          </th>
+          <th *ngIf="this.needUpdate" scope="row">
+            <input [(ngModel)]="user.phonenumber">
+          </th>
+          <th *ngIf="this.needUpdate" scope="row">
+            <input [(ngModel)]="user.email">
+          </th>
+          <th *ngIf="this.needUpdate" scope="row">
+            <input [(ngModel)]="user.city">
+          </th>
+          <th *ngIf="this.needUpdate" scope="row">
+            <input [(ngModel)]="user.state">
+          </th>
+          <td *ngIf="this.needUpdate" style='white-space: nowrap'>
+            <button type="button" class="btn btn-primary" (click)="UpdateUser(user.username, user.phonenumber, user.email, user.city, user.state)" >Update</button>
             <button class="btn btn-danger ml-2" mat-raised-button (click)="DeleteUser(user.username)" >Delete</button>
           </td>
         </tr>

@@ -9,6 +9,8 @@ import {VirtualizationPageComponent} from './virtualization-page/virtualization-
 import {SearchingPageComponent} from './searching-page/searching-page.component';
 import {AdminDashboardPageComponent} from './admin-dashboard-page/admin-dashboard-page.component';
 import {AdminLoginComponent} from './admin-login/admin-login.component';
+import {AdminAllusersPageComponent} from './admin-allusers-page/admin-allusers-page.component';
+import {Last100recordsPageComponent} from './admin-last100records-page/last100records-page.component';
 
 
 const routes: Routes = [
@@ -21,7 +23,9 @@ const routes: Routes = [
   {path: 'virsualization', component: VirtualizationPageComponent},
   {path: 'searching', component: SearchingPageComponent},
   {path: 'admin/dashboard', component: AdminDashboardPageComponent},
-  {path: 'admin/login', component: AdminLoginComponent}
+  {path: 'admin/login', component: AdminLoginComponent},
+  {path: 'admin/allusers', component: AdminAllusersPageComponent},
+  {path: 'admin/last100records', component: Last100recordsPageComponent}
 
 ];
 

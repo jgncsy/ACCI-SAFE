@@ -11,7 +11,7 @@ public interface AccidentRepository extends JpaRepository<Accidents, Long> {
 
     Accidents findOneById(Long reportId);
 
-    @Query(value = "select * from Accidents a order by a.starttime limit 100", nativeQuery = true)
+    @Query(value = "select * from Accidents a order by a.starttime desc limit 100", nativeQuery = true)
     List<Accidents> findFirst100OrderByStartTimeDesc();
 
     @Query(value = "select a.state as id, count(a) as value from Accidents a group by a.state")
@@ -23,14 +23,14 @@ public interface AccidentRepository extends JpaRepository<Accidents, Long> {
     @Query("select a.latitude as latitude, a.longitude as longitude from Accidents a where a.state =:state and a.city=:city and a.street like :street")
     List<AccidentController.RoadLocationImp> getAccidentsByRoad(@Param("state") String state, @Param("city") String city, @Param("street") String street);
 
-    @Query("select a.visibility as visibility , count(a) as number from Accidents a group by a.visibility")
+    @Query("select a.visibility as label , count(a) as value from Accidents a where a.visibility != 0 group by a.visibility")
     List<AccidentController.CountVisibilityImp> countByVisibility();
 
 
-    @Query("select a.humidity as humidity, count(a) as number from Accidents a group by a.humidity")
-    List<AccidentController.CountHumidityImp> countByHumidity();
+    @Query("select a.humidity as label, count(a) as value from Accidents a group by a.humidity")
+    List<AccidentController.CountVisibilityImp> countByHumidity();
 
 
-    @Query("select a.weathercondition as weatherCondition, count(a) as number from Accidents a group by a.weathercondition")
+    @Query("select a.weathercondition as label, count(a) as value from Accidents a group by a.weathercondition")
     List<AccidentController.CountWeatherConditionImp> countByWeatherCondition();
 }

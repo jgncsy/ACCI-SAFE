@@ -13,9 +13,17 @@ export class AuthenticationService {
 
   private currentUserSubject: BehaviorSubject<Users>;
   private currentUser: Observable<Users>;
+  private tempapi: string;
+  private api: string;
 
   constructor(private http: HttpClient,
               private router: Router) {
+    this.tempapi = sessionStorage.getItem('api');
+    if (this.tempapi) {
+      this.api = this.tempapi;
+    } else {
+      this.api = environment.PostgresApi;
+    }
     this.currentUserSubject = new BehaviorSubject<Users>(JSON.parse(sessionStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -26,14 +34,14 @@ export class AuthenticationService {
 
   login(username: string, password: string, isAdminLogin: boolean) {
     if (!isAdminLogin) {
-      return this.http.post<any>(`${environment.PostgresApi}/user/login`, {username, password})
+      return this.http.post<any>(this.api + `/user/login`, {username, password})
         .pipe(map(user => {
           sessionStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
           return user;
         }));
     } else {
-      return this.http.post<any>(`${environment.PostgresApi}/admin/login`, {username, password})
+      return this.http.post<any>(this.api + `/admin/login`, {username, password})
         .pipe(map(admin => {
           sessionStorage.setItem('currentAdmin', JSON.stringify(admin));
           this.currentUserSubject.next(admin);
@@ -44,7 +52,7 @@ export class AuthenticationService {
   }
 
   register(username: string, password: string, email: string, phonenumber: string, city: string, state: string) {
-    return this.http.post<any>(`${environment.PostgresApi}/user/signup`, {username, password, email, phonenumber, city, state})
+    return this.http.post<any>(this.api + `/user/signup`, {username, password, email, phonenumber, city, state})
       .pipe(map(user => {
         sessionStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
@@ -53,7 +61,7 @@ export class AuthenticationService {
   }
 
   restPassword(username: string, password: string) {
-    return this.http.put<any>(`${environment.PostgresApi}/user/updatePassword/${username}`, {password})
+    return this.http.put<any>( this.api + `/user/updatePassword/${username}`, {password})
       .pipe(map(user => {
         sessionStorage.removeItem('currentUserName');
         sessionStorage.setItem('currentUser', JSON.stringify(user));

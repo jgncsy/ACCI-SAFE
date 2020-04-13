@@ -8,9 +8,11 @@ import edu.pitt.api.Postgres.repository.AdminRepository;
 import edu.pitt.api.Postgres.repository.UserRepository;
 import edu.pitt.api.Postgres.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping(AppKeys.Postgres_API_PATH + "/admin")
 public class AdminController {
@@ -61,13 +64,37 @@ public class AdminController {
     @GetMapping("/allUsers")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<User> getAllUser() {
-        return userRepository.findAll();
+        return userRepository.findAll(Sort.by(Sort.Direction.ASC, "isAdmin"));
     }
 
     @GetMapping("/allAccidents")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Accidents> getRecent100Reports() {
         return accidentRepository.findFirst100OrderByStartTimeDesc();
+    }
+
+    @PutMapping("changeRole/{username}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public User changeRole(@PathVariable String username) {
+        User user = userRepository.findOneByUsername(username);
+        user.setAdmin(!user.getIsAdmin());
+        userRepository.save(user);
+        return user;
+    }
+
+    @PutMapping("updateUser/{username}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public User updateByUsername(@PathVariable String username, @RequestBody User user) {
+        User olduser = userRepository.findOneByUsername(username);
+        if (olduser == null) {
+            throw new RuntimeException("No user is found");
+        } else {
+            olduser.setEmail(user.getEmail());
+            olduser.setPhonenumber(user.getPhonenumber());
+            olduser.setState(user.getState());
+            olduser.setCity(user.getCity());
+            return userRepository.save(olduser);
+        }
     }
 
     @PutMapping("/{reportId}")
@@ -77,7 +104,15 @@ public class AdminController {
         if (oldAccident == null) {
             throw new RuntimeException("No report is found");
         } else {
-            return accidentRepository.save(accidents);
+            oldAccident.setCity(accidents.getCity());
+            oldAccident.setHumidity(accidents.getHumidity());
+            oldAccident.setLatitude(accidents.getLatitude());
+            oldAccident.setLongitude(accidents.getLongitude());
+            oldAccident.setState(accidents.getState());
+            oldAccident.setZipcode(accidents.getZipcode());
+            oldAccident.setStreet(accidents.getStreet());
+            oldAccident.setVisibility(accidents.getVisibility());
+            return accidentRepository.save(oldAccident);
         }
     }
 
@@ -93,6 +128,7 @@ public class AdminController {
 
     @DeleteMapping("/user/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Transactional
     public void deleteUserbyUsername(@PathVariable String username) {
         try {
             userRepository.deleteByUsername(username);

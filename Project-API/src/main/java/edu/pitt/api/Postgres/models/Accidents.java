@@ -1,7 +1,6 @@
 package edu.pitt.api.Postgres.models;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "Accidents")
@@ -46,11 +45,11 @@ public class Accidents {
     @Column
     String starttime;
 
-    @Column
-    int humidity;
+    @Column(nullable = false)
+    int humidity = 0;
 
-    @Column
-    double visibility;
+    @Column(nullable = false)
+    double visibility = 0.0;
 
     @Column
     String weathercondition;
@@ -68,6 +67,7 @@ public class Accidents {
     }
 
     public void setVisibility(double visibility) {
+
         this.visibility = visibility;
     }
 

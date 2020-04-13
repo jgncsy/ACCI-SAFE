@@ -1,7 +1,6 @@
 package edu.pitt.api.Postgres.controllers;
 
 import edu.pitt.api.Postgres.config.AppKeys;
-import edu.pitt.api.Postgres.exception.CustomException;
 import edu.pitt.api.Postgres.models.Accidents;
 import edu.pitt.api.Postgres.models.User;
 import edu.pitt.api.Postgres.repository.AccidentRepository;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -51,8 +49,11 @@ public class UserController {
     @PostMapping(value = "/signup")
     public Object signup(@RequestBody User user) {
         User exsitingUser = userRepository.findOneByUsername(user.getUsername());
+        User EmailUser = userRepository.findOneByEmail(user.getEmail());
         if (exsitingUser != null) {
             throw new RuntimeException("username already exists");
+        } else if (EmailUser != null) {
+            throw new RuntimeException("email already exists");
         } else {
             String token = jwtTokenProvider.createUserToken(user);
 
@@ -137,12 +138,12 @@ public class UserController {
 
     @PostMapping(value = "/self-report/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-    public Accidents self_report (@PathVariable String username, @RequestBody Accidents accidents) {
+    public Accidents self_report(@PathVariable String username, @RequestBody Accidents accidents) {
         User user = userRepository.findOneByUsername(username);
         if (user == null) {
             throw new RuntimeException("username doesn't exist");
         } else {
-            if (!user.getIsAnonymous()){
+            if (!user.getIsAnonymous()) {
                 accidents.setSource(username);
             }
         }
@@ -151,14 +152,14 @@ public class UserController {
 
     @GetMapping(value = "/reports/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-    public List<Accidents> reportsByUsername (@PathVariable String username) {
+    public List<Accidents> reportsByUsername(@PathVariable String username) {
         return accidentRepository.findAllBySource(username);
     }
 
     @DeleteMapping(value = "/{username}/{reportId}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-    public void deleteByReportId (@PathVariable String username, @PathVariable Long reportId) {
-        try{
+    public void deleteByReportId(@PathVariable String username, @PathVariable Long reportId) {
+        try {
             accidentRepository.deleteById(reportId);
         } catch (NullPointerException er) {
             throw new RuntimeException("cannot find report");

@@ -6,12 +6,9 @@ import edu.pitt.api.neo4j.domain.Neo4jAccident;
 import edu.pitt.api.neo4j.service.Neo4jAccidentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.annotation.QueryResult;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -34,7 +31,7 @@ public class Neo4jAccidentController {
     }
 
     @GetMapping(value = "/accidentsByRoad/{state}/{city}/{road}")
-    public List<Neo4jAccident> getAccidentsByRoad(@PathVariable String state, @PathVariable String city, @PathVariable String road) {
+    public List<RoadLocation> getAccidentsByRoad(@PathVariable String state, @PathVariable String city, @PathVariable String road) {
 
         return neo4jAccidentService.getAccidentByRoad(state,city,road);
     }
@@ -58,23 +55,47 @@ public class Neo4jAccidentController {
 
     @QueryResult
     public static class Count {
-        String location;
-        int number;
+        String id;
+        int value;
 
-        public int getNumber() {
-            return number;
+        public int getValue() {
+            return value;
         }
 
-        public String getLocation() {
-            return location;
+        public void setValue(int value) {
+            this.value = value;
         }
 
-        public void setNumber(int number) {
-            this.number = number;
+        public String getId() {
+            return id;
         }
 
-        public void setLocation(String location) {
-            this.location = location;
+        public void setId(String id) {
+            this.id = id;
+        }
+    }
+
+    @QueryResult
+    public class RoadLocation {
+        float latitude;
+        float longitude;
+
+        public float getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(String latitude) {
+            if (latitude == null) return;
+            this.latitude = Float.parseFloat(latitude);
+        }
+
+        public float getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(String longitude) {
+            if (longitude == null) return;
+            this.longitude = Float.parseFloat(longitude);
         }
     }
 

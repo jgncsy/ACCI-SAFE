@@ -27,8 +27,8 @@ public interface Neo4jAccidentRepository extends Neo4jRepository<Neo4jAccident,L
     @Query("match (p) where p.state=$state return p.county AS location, count(*) AS number")
     List<Neo4jAccidentController.Count> countByCounty(@Param("state") String state);
 
-    @Query("match (p) where p.city= $city and p.state=$state and p.street =$street return p")
-    List<Neo4jAccident> getAccidentsByRoad(@Param("state") String state, @Param("city") String city, @Param("street") String street);
+    @Query("match (p) where p.city= $city and p.state=$state and p.street =$street return p.latitude AS latitude, p.longitude AS longitude")
+    List<Neo4jAccidentController.RoadLocation> getAccidentsByRoad(@Param("state") String state, @Param("city") String city, @Param("street") String street);
 
     @Query("match(p) return p.visibility AS visibility,count(*) AS number")
     List<Neo4jAccidentController.CountVisibility> countByVisibility();

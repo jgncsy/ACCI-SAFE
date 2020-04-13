@@ -38,10 +38,10 @@ public class User {
     String city;
 
     @Column
-    boolean isAdmin;
+    boolean isAdmin = false;
 
     @Column
-    boolean isAnonymous;
+    boolean isAnonymous = false;
 
     @JsonIgnore
     public List<Role> getRoles() {

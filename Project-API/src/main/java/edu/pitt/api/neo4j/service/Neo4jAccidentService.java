@@ -23,7 +23,7 @@ public class Neo4jAccidentService {
         return neo4jAccidentRepository.countByCounty(state);
     }
 
-    public List<Neo4jAccident> getAccidentByRoad(String state, String city, String street){
+    public List<Neo4jAccidentController.RoadLocation> getAccidentByRoad(String state, String city, String street){
         return neo4jAccidentRepository.getAccidentsByRoad(state,city,street);
     }
 

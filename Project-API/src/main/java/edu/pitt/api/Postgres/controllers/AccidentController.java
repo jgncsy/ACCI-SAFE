@@ -46,7 +46,7 @@ public class AccidentController {
     }
 
     @GetMapping(value = "/numbersByHumidity")
-    public List<AccidentController.CountHumidityImp> getNumbersByHumidity() {
+    public List<AccidentController.CountVisibilityImp> getNumbersByHumidity() {
         return accidentRepository.countByHumidity();
     }
 
@@ -67,34 +67,25 @@ public class AccidentController {
     }
 
     public interface CountVisibilityImp {
-        Double getVisibility();
+        String getLabel();
 
-        void setVisibility(Double visibility);
+        void setLabel(Double label);
 
-        int getNumber();
+        long getValue();
 
-        void setNumber(int number);
+        void setValue(long value);
 
     }
 
-    public interface CountHumidityImp {
-        Double getHumidity();
-
-        void setHumidity(Double humidity);
-
-        int getNumber();
-
-        void setNumber(int number);
-    }
 
     public interface CountWeatherConditionImp {
-        String getWeatherCondition();
+        String getLabel();
 
-        void setWeatherCondition(String weatherCondition);
+        void setLabel(String Label);
 
-        int getNumber();
+        long getValue();
 
-        void setNumber(int number);
+        void setValue(long value);
     }
 
     public interface RoadLocationImp {
@@ -109,23 +100,23 @@ public class AccidentController {
 
     @QueryResult
     public static class CountVisibility implements CountVisibilityImp {
-        Double visibility;
-        int number;
+        String label;
+        long value;
 
-        public Double getVisibility() {
-            return visibility;
+        public String getLabel() {
+            return label;
         }
 
-        public void setVisibility(Double visibility) {
-            this.visibility = visibility;
+        public void setLabel(Double label) {
+            this.label = String.valueOf(label);
         }
 
-        public int getNumber() {
-            return number;
+        public long getValue() {
+            return value;
         }
 
-        public void setNumber(int number) {
-            this.number = number;
+        public void setValue(long value) {
+            this.value = value;
         }
     }
 
@@ -152,46 +143,24 @@ public class AccidentController {
     }
 
     @QueryResult
-    public class CountHumidity implements CountHumidityImp {
-        Double humidity;
-        int number;
+    public class CountWeatherCondition implements CountWeatherConditionImp {
+        String label;
+        long value;
 
-        public Double getHumidity() {
-            return humidity;
+        public String getLabel() {
+            return label;
         }
 
-        public void setHumidity(Double humidity) {
-            this.humidity = humidity;
+        public void setLabel(String label) {
+            this.label = label;
         }
 
-        public int getNumber() {
-            return number;
+        public long getValue() {
+            return value;
         }
 
-        public void setNumber(int number) {
-            this.number = number;
-        }
-    }
-
-    @QueryResult
-    public class CountWeatherCondition {
-        String weatherCondition;
-        int number;
-
-        public String getWeatherCondition() {
-            return weatherCondition;
-        }
-
-        public void setWeatherCondition(String weatherCondition) {
-            this.weatherCondition = weatherCondition;
-        }
-
-        public int getNumber() {
-            return number;
-        }
-
-        public void setNumber(int number) {
-            this.number = number;
+        public void setValue(long value) {
+            this.value = value;
         }
     }
 

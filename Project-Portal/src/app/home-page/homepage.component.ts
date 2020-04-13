@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-
-declare const require: any;
+import {AlertService} from '../Service/alert.service';
 
 @Component({
   selector: 'app-homepage',
@@ -17,8 +16,20 @@ export class HomepageComponent implements OnInit {
   data: Data[];
   dataSource: any;
   loading: boolean;
+  tempapi: string;
+  api: string;
+  private message: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private alertService: AlertService) {
+
+    this.tempapi = sessionStorage.getItem('api');
+    if (this.tempapi) {
+      this.api = this.tempapi;
+    } else {
+      this.api = environment.PostgresApi;
+    }
+
     this.loading = true;
 
     this.chart = {
@@ -52,10 +63,10 @@ export class HomepageComponent implements OnInit {
         {
           maxvalue: '5000',
           code: '#FF6666'
-        },{
+        }, {
           maxvalue: '10000',
           code: '#FF3333'
-        },{
+        }, {
           maxvalue: '50000',
           code: '#FF9933'
         },
@@ -90,28 +101,25 @@ export class HomepageComponent implements OnInit {
       ]
     };
 
-    async function getData() {
-      const temp = await http.get<Data[]>(`${environment.PostgresApi}/accident/numbersByState`).toPromise();
-      return temp;
-    }
-
-    const dataSource = {
-        chart: this.chart,
-        colorrange: this.colorrange,
-        data:  [{id: 'AL', value: 0}]
-      }
-    ;
-    getData().then(temp => {
-      this.loading = false;
-      this.dataSource.data = temp;
-    });
-    this.dataSource = dataSource;
-
+    this.dataSource = {
+      chart: this.chart,
+      colorrange: this.colorrange,
+      data: []
+    };
   }
 
 
   ngOnInit() {
+    this.loading = true;
 
+    this.http.get<Data[]>(this.api + `/accident/numbersByState`).subscribe(data => {
+      this.dataSource.data = data;
+      this.loading = false;
+    }, error => {
+      this.message = error.error.message == null ? error.error : error.error.message;
+      this.alertService.error(this.message);
+      this.loading = false;
+    });
   }
 
 }
