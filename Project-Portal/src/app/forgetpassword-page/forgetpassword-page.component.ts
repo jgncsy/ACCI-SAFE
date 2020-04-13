@@ -147,6 +147,7 @@ export class ForgetpasswordPageComponent implements OnInit {
     this.resetloading = true;
     this.authentication.restPassword(this.userService.currentUserNameValue, this.r.password.value)
       .subscribe(data => {
+        sessionStorage.removeItem('currentUserName');
         this.router.navigate(['/']);
       }, error => {
         this.message = error.error.message == null ? error.error : error.error.message;

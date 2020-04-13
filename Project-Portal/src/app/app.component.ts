@@ -21,17 +21,26 @@ export class AppComponent {
   }
 
   changePostgreApi() {
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentAdmin');
+    sessionStorage.removeItem('currentUserName');
     sessionStorage.setItem('api', 'http://localhost:8080/PostgresApi');
     // environment.PostgresApi = 'http://localhost:8080/PostgresApi';
   }
 
   changeMongoDBApi() {
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentAdmin');
+    sessionStorage.removeItem('currentUserName');
     sessionStorage.setItem('api', 'http://localhost:8080/PostgresApi');
     // environment.PostgresApi = 'http://localhost:8080/PostgresApi';
   }
 
 
   changeNeo4jApi() {
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentAdmin');
+    sessionStorage.removeItem('currentUserName');
     sessionStorage.setItem('api', 'http://localhost:8080/Neo4jApi');
     // environment.PostgresApi = 'http://localhost:8080/Neo4jApi';
   }
