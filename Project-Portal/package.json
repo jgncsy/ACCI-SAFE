@@ -22,7 +22,6 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
-    "@ng-bootstrap/ng-bootstrap": "^5.2.2",
     "angular-datatables": "^9.0.1",
     "angular-fusioncharts": "^3.0.4",
     "angular-us-map": "^1.2.0",
