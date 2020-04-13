@@ -11,13 +11,13 @@ export class MyaccountPageComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router) {
-    if (!this.authenticationService.currentUserValue) {
-      this.router.navigate(['user/login']);
-    }
-    console.log(this.authenticationService.currentUserValue.user);
+    // if (!this.authenticationService.currentUserValue) {
+    //   this.router.navigate(['user/login']);
+    // }
+    // console.log(this.authenticationService.currentUserValue.user);
   }
 
   ngOnInit() {
-  }
+  };
 
 }
