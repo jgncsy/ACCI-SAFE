@@ -31,7 +31,7 @@ public class Neo4jAccidentService {
         return neo4jAccidentRepository.countByVisibility();
     }
 
-    public List<Neo4jAccidentController.CountHumidity> countByHumidity(){
+    public List<Neo4jAccidentController.CountVisibility> countByHumidity(){
         return neo4jAccidentRepository.countByHumidity();
     }
 

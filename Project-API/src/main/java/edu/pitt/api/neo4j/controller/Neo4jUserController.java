@@ -5,6 +5,7 @@ import edu.pitt.api.neo4j.Config.AppKeys;
 import edu.pitt.api.neo4j.domain.Neo4jAccident;
 import edu.pitt.api.neo4j.domain.Neo4jUser;
 import edu.pitt.api.neo4j.repository.Neo4jAccidentRepository;
+import edu.pitt.api.neo4j.repository.Neo4jAdminRepository;
 import edu.pitt.api.neo4j.repository.Neo4jUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ public class Neo4jUserController {
     Neo4jUserRepository neo4jUserRepository;
     @Autowired
     Neo4jAccidentRepository neo4jAccidentRepository;
+    @Autowired
+    Neo4jAdminRepository neo4jAdminRepository;
 
     @Autowired
     private JwtTokenProvider neo4jJwtTokenProvider;
@@ -31,8 +34,12 @@ public class Neo4jUserController {
     @PostMapping(value = "/login")
     public Object Userlogin(@RequestBody LoginBody body) {
         Optional<Neo4jUser> tempuser = neo4jUserRepository.findOneByUsernameAndPassword(body.username, body.password);
+        Neo4jUser user = neo4jAdminRepository.findOneByUsernameAndPassword(body.username, body.password);
         if (!tempuser.isPresent()) {
             return ResponseEntity.badRequest().body("Neo4jUser username and password mismatch");
+        }
+        if (user == null || user.getIsAdmin()) {
+            return ResponseEntity.badRequest().body("You are Admin Please Use Admin Login Link");
         }
         return Neo4jAdminController.getObject(tempuser, neo4jJwtTokenProvider);
     }
@@ -40,13 +47,16 @@ public class Neo4jUserController {
     @PostMapping(value = "/signup")
     public Object signup(@RequestBody Neo4jUser neo4jUser) {
         Neo4jUser exsitingNeo4jUser = neo4jUserRepository.findOneByUsername(neo4jUser.getUsername());
+        Neo4jUser EmailUser = neo4jUserRepository.findOneByEmail(neo4jUser.getEmail());
         if (exsitingNeo4jUser != null) {
             throw new RuntimeException("username already exists");
+        } else if (EmailUser != null) {
+            throw new RuntimeException("email already exists");
         } else {
             String token = neo4jJwtTokenProvider.createNeo4jToken(neo4jUser);
 
             HashMap<String, Object> result = new HashMap<>();
-            result.put("neo4jUser", neo4jUserRepository.save(neo4jUser));
+            result.put("user", neo4jUserRepository.save(neo4jUser));
             result.put("token", token);
             return result;
         }
@@ -70,6 +80,11 @@ public class Neo4jUserController {
             throw new RuntimeException("username doesn't exist");
         } else {
             oldNeo4jUser.setPassword(neo4jUser.getPassword());
+            String token = neo4jJwtTokenProvider.createNeo4jToken(oldNeo4jUser);
+
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("user", neo4jUserRepository.save(oldNeo4jUser));
+            result.put("token", token);
             return neo4jUserRepository.save(oldNeo4jUser);
         }
     }

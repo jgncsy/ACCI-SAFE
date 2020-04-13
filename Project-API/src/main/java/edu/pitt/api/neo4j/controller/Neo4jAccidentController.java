@@ -1,6 +1,7 @@
 package edu.pitt.api.neo4j.controller;
 
 
+import edu.pitt.api.Postgres.controllers.AccidentController;
 import edu.pitt.api.neo4j.Config.AppKeys;
 import edu.pitt.api.neo4j.domain.Neo4jAccident;
 import edu.pitt.api.neo4j.service.Neo4jAccidentService;
@@ -42,7 +43,7 @@ public class Neo4jAccidentController {
     }
 
     @GetMapping(value = "/numbersByHumidity")
-    public List<CountHumidity> getNumbersByHumidity(){
+    public List<CountVisibility> getNumbersByHumidity(){
         return neo4jAccidentService.countByHumidity();
     }
 
@@ -100,68 +101,68 @@ public class Neo4jAccidentController {
     }
 
     @QueryResult
-    public class CountVisibility {
-        Double visibility;
-        int number;
+    public static class CountVisibility {
+        String label;
+        long value;
 
-        public Double getVisibility() {
-            return visibility;
+        public String getLabel() {
+            return label;
         }
 
-        public void setVisibility(Double visibility) {
-            this.visibility = visibility;
+        public void setLabel(Double label) {
+            this.label = String.valueOf(label);
         }
 
-        public int getNumber() {
-            return number;
+        public long getValue() {
+            return value;
         }
 
-        public void setNumber(int number) {
-            this.number = number;
-        }
-    }
-
-    @QueryResult
-    public  class CountHumidity {
-        Double humidity;
-        int number;
-
-        public Double getHumidity() {
-            return humidity;
-        }
-
-        public void setHumidity(Double humidity) {
-            this.humidity = humidity;
-        }
-
-        public int getNumber() {
-            return number;
-        }
-
-        public void setNumber(int number) {
-            this.number = number;
+        public void setValue(long value) {
+            this.value = value;
         }
     }
+//
+//    @QueryResult
+//    public  class CountHumidity {
+//        Double humidity;
+//        int number;
+//
+//        public Double getHumidity() {
+//            return humidity;
+//        }
+//
+//        public void setHumidity(Double humidity) {
+//            this.humidity = humidity;
+//        }
+//
+//        public int getNumber() {
+//            return number;
+//        }
+//
+//        public void setNumber(int number) {
+//            this.number = number;
+//        }
+//    }
 
     @QueryResult
     public class CountWeatherCondition {
-        String weatherCondition;
-        int number;
+        String label;
+        long value;
 
-        public String getWeatherCondition() {
-            return weatherCondition;
+        public String getLabel() {
+            return label;
         }
 
-        public void setWeatherCondition(String weatherCondition) {
-            this.weatherCondition = weatherCondition;
+        public void setLabel(String label) {
+            this.label = label;
         }
 
-        public int getNumber() {
-            return number;
+        public long getValue() {
+            return value;
         }
 
-        public void setNumber(int number) {
-            this.number = number;
+        public void setValue(long value) {
+            this.value = value;
         }
     }
 

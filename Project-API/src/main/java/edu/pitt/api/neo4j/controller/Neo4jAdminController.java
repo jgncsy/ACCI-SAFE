@@ -1,5 +1,6 @@
 package edu.pitt.api.neo4j.controller;
 
+import edu.pitt.api.Postgres.models.User;
 import edu.pitt.api.Postgres.security.JwtTokenProvider;
 import edu.pitt.api.neo4j.Config.AppKeys;
 import edu.pitt.api.neo4j.domain.Neo4jAccident;
@@ -8,6 +9,7 @@ import edu.pitt.api.neo4j.repository.Neo4jAccidentRepository;
 import edu.pitt.api.neo4j.repository.Neo4jAdminRepository;
 import edu.pitt.api.neo4j.repository.Neo4jUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
@@ -63,13 +65,37 @@ public class Neo4jAdminController {
     @GetMapping("/allUsers")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Iterable<Neo4jUser> getAllUser() {
-        return neo4jUserRepository.findAll();
+        return neo4jUserRepository.findAll(Sort.by(Sort.Direction.ASC, "isAdmin"));
     }
 
     @GetMapping("/allAccidents")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Neo4jAccident> getRecent100Reports() {
         return neo4jAccidentRepository.findFirst100OrderByStartTimeDesc();
+    }
+
+    @PutMapping("changeRole/{username}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Neo4jUser changeRole(@PathVariable String username) {
+        Neo4jUser user = neo4jUserRepository.findOneByUsername(username);
+        user.setAdmin(!user.getIsAdmin());
+        neo4jUserRepository.save(user);
+        return user;
+    }
+
+    @PutMapping("updateUser/{username}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Neo4jUser updateByUsername(@PathVariable String username, @RequestBody Neo4jUser user) {
+        Neo4jUser olduser = neo4jUserRepository.findOneByUsername(username);
+        if (olduser == null) {
+            throw new RuntimeException("No user is found");
+        } else {
+            olduser.setEmail(user.getEmail());
+            olduser.setPhonenumber(user.getPhonenumber());
+            olduser.setState(user.getState());
+            olduser.setCity(user.getCity());
+            return neo4jUserRepository.save(olduser);
+        }
     }
 
     @PutMapping("/{reportId}")
@@ -79,7 +105,15 @@ public class Neo4jAdminController {
         if (oldNeo4jAccident == null) {
             throw new RuntimeException("No report is found");
         } else {
-            return neo4jAccidentRepository.save(accidents);
+            oldNeo4jAccident.setCity(accidents.getCity());
+            oldNeo4jAccident.setHumidity(accidents.getHumidity());
+            oldNeo4jAccident.setLatitude(accidents.getLatitude());
+            oldNeo4jAccident.setLongitude(accidents.getLongitude());
+            oldNeo4jAccident.setState(accidents.getState());
+            oldNeo4jAccident.setZipcode(accidents.getZipcode());
+            oldNeo4jAccident.setStreet(accidents.getStreet());
+            oldNeo4jAccident.setVisibility(accidents.getVisibility());
+            return neo4jAccidentRepository.save(oldNeo4jAccident);
         }
     }
 
