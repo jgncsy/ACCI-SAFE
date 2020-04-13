@@ -82,7 +82,7 @@ public class AdminController {
         return user;
     }
 
-    @PutMapping("updateUser/{username}")
+    @PutMapping("/updateUser/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public User updateByUsername(@PathVariable String username, @RequestBody User user) {
         User olduser = userRepository.findOneByUsername(username);

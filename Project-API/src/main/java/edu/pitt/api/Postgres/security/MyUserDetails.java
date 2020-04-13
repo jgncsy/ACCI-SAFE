@@ -20,7 +20,7 @@ public class MyUserDetails implements UserDetailsService {
         final User user = userRepository.findOneByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("Neo4jUser '" + username + "' not found");
+            throw new UsernameNotFoundException("user '" + username + "' not found");
         }
 
         return org.springframework.security.core.userdetails.User//

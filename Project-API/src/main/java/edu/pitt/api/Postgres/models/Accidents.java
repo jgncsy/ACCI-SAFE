@@ -3,7 +3,7 @@ package edu.pitt.api.Postgres.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Accidents")
+@Table(name = "accidents")
 public class Accidents {
 
     @Id

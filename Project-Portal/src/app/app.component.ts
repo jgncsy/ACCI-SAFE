@@ -32,7 +32,7 @@ export class AppComponent {
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('currentAdmin');
     sessionStorage.removeItem('currentUserName');
-    sessionStorage.setItem('api', 'http://localhost:8080/PostgresApi');
+    sessionStorage.setItem('api', 'http://localhost:8080/MongoApi');
     // environment.PostgresApi = 'http://localhost:8080/PostgresApi';
   }
 

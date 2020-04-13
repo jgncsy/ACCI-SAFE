@@ -16,6 +16,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import static edu.pitt.api.Mongo.config.AppKeys.Mongo_API_PATH;
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -46,6 +48,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/user/updatePassword/**").permitAll()//
                 .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/admin/login").permitAll()//
                 .antMatchers(edu.pitt.api.neo4j.Config.AppKeys.NEO4J_API_PATH+"/accident/**").permitAll()//
+                .antMatchers(Mongo_API_PATH +"/user/login").permitAll()//
+                .antMatchers(Mongo_API_PATH+"/user/signup").permitAll()//
+                .antMatchers(Mongo_API_PATH+"/user/infoCheck").permitAll()//
+                .antMatchers(Mongo_API_PATH+"/user/updatePassword/**").permitAll()//
+                .antMatchers(Mongo_API_PATH+"/admin/login").permitAll()//
+                .antMatchers(Mongo_API_PATH+"/accident/**").permitAll()//
                 // Disallow everything else..
                 .anyRequest().authenticated();
 

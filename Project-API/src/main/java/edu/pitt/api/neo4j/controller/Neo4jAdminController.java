@@ -74,7 +74,7 @@ public class Neo4jAdminController {
         return neo4jAccidentRepository.findFirst100OrderByStartTimeDesc();
     }
 
-    @PutMapping("changeRole/{username}")
+    @PutMapping("/changeRole/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Neo4jUser changeRole(@PathVariable String username) {
         Neo4jUser user = neo4jUserRepository.findOneByUsername(username);
@@ -83,7 +83,7 @@ public class Neo4jAdminController {
         return user;
     }
 
-    @PutMapping("updateUser/{username}")
+    @PutMapping("/updateUser/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Neo4jUser updateByUsername(@PathVariable String username, @RequestBody Neo4jUser user) {
         Neo4jUser olduser = neo4jUserRepository.findOneByUsername(username);
