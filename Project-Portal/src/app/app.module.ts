@@ -38,6 +38,7 @@ import { Chart1Component } from './chart1/chart1.component';
 import { Chart2Component } from './chart2/chart2.component';
 import { Chart3Component } from './chart3/chart3.component';
 import { Chart4Component } from './chart4/chart4.component';
+import {UserProfileComponent} from './user-profile/user-profile.component';
 
 
 // Pass the fusioncharts library and chart modules
@@ -61,7 +62,8 @@ FusionChartsModule.fcRoot(FusionCharts, charts, Maps, FusionTheme, USA);
     Chart1Component,
     Chart2Component,
     Chart3Component,
-    Chart4Component
+    Chart4Component,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
