@@ -4,6 +4,7 @@ import {Accidents} from '../Models/accidents';
 import {AccidentService} from '../Service/accident.service';
 import {UserService} from '../Service/user.service';
 import {AlertService} from '../Service/alert.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-reporthistory-page',
@@ -18,7 +19,12 @@ export class UserReporthistoryPageComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService,
               private accidentService: AccidentService,
               private userService: UserService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private router: Router) {
+    if (!this.authenticationService.currentUserValue) {
+      this.router.navigate(['user/login']);
+    }
+  }
 
   ngOnInit() {
     if (sessionStorage.getItem('api') === 'http://localhost:8080/MongoApi') {
