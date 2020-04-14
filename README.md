@@ -11,7 +11,7 @@ Admin will handle all reports.
 |:---|---|---|
 |ZIJIAN XU|zix10|Postgres|
 |YUE SUN|yus84|Postgres|
-|HANCHEN WANG|haw11|Postgres|
+|HANCHEN WANG|haw110|Postgres|
 |YANBING YANG|yay76|MongoDB|
 |YUCHEN DENG|yud43|MongoDB|
 |TAO TAO|tat76|MongoDB|
