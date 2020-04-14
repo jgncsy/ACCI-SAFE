@@ -165,7 +165,7 @@ public class AccidentController {
     }
 
     @QueryResult
-    public class RoadLocation {
+    public class RoadLocation implements RoadLocationImp {
         float latitude;
         float longitude;
 

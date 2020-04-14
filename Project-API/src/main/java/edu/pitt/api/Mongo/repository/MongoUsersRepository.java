@@ -12,19 +12,21 @@ public interface MongoUsersRepository extends MongoRepository<MongoUsers,String 
     List<MongoUsers> findByThePersonsid(String id);
 
 
-    @Query(value = "{'usrname':?0,'city':?1,'state':?2,'email':?3,'phone':?4}")
-    List<MongoUsers> checkInfo(String usrname, String city, String state, String email, String phone);
+    @Query(value = "{'username':?0,'city':?1,'state':?2,'email':?3,'phonenumber':?4}")
+    MongoUsers checkInfo(String username, String city, String state, String email, String phone);
 
 
-    List<MongoUsers> findOneByUsrname(String usrname);
+    List<MongoUsers> findOneByUsername(String username);
 
-    List<MongoUsers> findUsersByUsrname(String usrname);
+    List<MongoUsers> findUsersByUsername(String username);
 
-    MongoUsers findUsersByUsrnameIs(String usrname);
+    MongoUsers findUsersByUsernameIs(String username);
 
     MongoUsers findUsersByEmailIs(String email);
 
-    MongoUsers findUsersByUsrnameIsAndPwdIs(String usrname, String pwd);
+    MongoUsers findUsersByUsernameIsAndPasswordIs(String username, String pwd);
+
+    boolean existsUsersByUsername(String username);
 
 
 }

@@ -1,9 +1,5 @@
 package edu.pitt.api.neo4j.controller;
-
-
-import edu.pitt.api.Postgres.controllers.AccidentController;
 import edu.pitt.api.neo4j.Config.AppKeys;
-import edu.pitt.api.neo4j.domain.Neo4jAccident;
 import edu.pitt.api.neo4j.service.Neo4jAccidentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.annotation.QueryResult;
@@ -38,12 +34,12 @@ public class Neo4jAccidentController {
     }
 
     @GetMapping(value = "/numbersByVisibility")
-    public List<CountVisibility> getNumbersByVisibility(){
+    public List<CountWeatherCondition> getNumbersByVisibility(){
         return neo4jAccidentService.countByvisibility();
     }
 
     @GetMapping(value = "/numbersByHumidity")
-    public List<CountVisibility> getNumbersByHumidity(){
+    public List<CountWeatherCondition> getNumbersByHumidity(){
         return neo4jAccidentService.countByHumidity();
     }
 
@@ -77,7 +73,7 @@ public class Neo4jAccidentController {
     }
 
     @QueryResult
-    public class RoadLocation {
+    public class RoadLocation implements RoadLocationImp {
         float latitude;
         float longitude;
 
@@ -85,23 +81,41 @@ public class Neo4jAccidentController {
             return latitude;
         }
 
-        public void setLatitude(String latitude) {
-            if (latitude == null) return;
-            this.latitude = Float.parseFloat(latitude);
+        public void setLatitude(float latitude) {
+            this.latitude = latitude;
         }
 
         public float getLongitude() {
             return longitude;
         }
 
-        public void setLongitude(String longitude) {
-            if (longitude == null) return;
-            this.longitude = Float.parseFloat(longitude);
+        public void setLongitude(float longitude) {
+            this.longitude = longitude;
         }
     }
 
+    public interface RoadLocationImp {
+        float getLatitude();
+
+        void setLatitude(float latitude);
+
+        float getLongitude();
+
+        void setLongitude(float longitude);
+    }
+
+    public interface CountVisibilityImp {
+        String getLabel();
+
+        void setLabel(Double label);
+
+        long getValue();
+
+        void setValue(long value);
+    }
+
     @QueryResult
-    public static class CountVisibility {
+    public static class CountVisibility implements CountVisibilityImp {
         String label;
         long value;
 

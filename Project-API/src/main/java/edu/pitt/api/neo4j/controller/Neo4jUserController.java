@@ -117,7 +117,7 @@ public class Neo4jUserController {
 
 
     //update all information
-    @PutMapping(value = "/updateAllInfo/{username}")
+    @PostMapping(value = "/updateAllInfo/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public Neo4jUser updateAllInfo(@PathVariable String username, @RequestBody Neo4jUser neo4jUser) {
         Neo4jUser oldNeo4jUser = neo4jUserRepository.findOneByUsername(username);
@@ -159,9 +159,9 @@ public class Neo4jUserController {
         return neo4jAccidentRepository.findAllBySource(username);
     }
 
-    @DeleteMapping(value = "/{username}/{reportId}")
+    @DeleteMapping(value = "/report/{reportId}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-    public void deleteByReportId (@PathVariable String username, @PathVariable Long reportId) {
+    public void deleteByReportId (@PathVariable Long reportId) {
         try{
             neo4jAccidentRepository.deleteById(reportId);
         } catch (NullPointerException er) {

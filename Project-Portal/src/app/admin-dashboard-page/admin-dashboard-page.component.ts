@@ -16,6 +16,7 @@ export class AdminDashboardPageComponent implements OnInit {
   dataarray: Users[];
   message: any;
   user: Users;
+  isMongo: boolean;
 
   constructor(private authenticationService: AuthenticationService,
               private userService: UserService,
@@ -29,6 +30,11 @@ export class AdminDashboardPageComponent implements OnInit {
 
   ngOnInit() {
     this.getAllUser();
+    if (sessionStorage.getItem('api') === 'http://localhost:8080/MongoApi') {
+      this.isMongo = true;
+    } else {
+      this.isMongo = false;
+    }
   }
 
   getAllUser() {
@@ -54,7 +60,12 @@ export class AdminDashboardPageComponent implements OnInit {
     });
   }
 
-  DeleteUser(id: any) {
-
+  DeleteUser(username: string) {
+    return this.userService.deleteUser(username).subscribe(data => {
+      this.alertService.success('Role has been deleted');
+      window.location.reload();
+    }, error => {
+      this.alertService.error('something was wrong');
+    });
   }
 }

@@ -219,11 +219,11 @@ public class MongoAccidents
         this.humidity = humidity;
     }
 
-    public String getVisibity() {
+    public String getVisibility() {
         return visibility;
     }
 
-    public void setVisibity(String visibity) {
+    public void setVisibility(String visibity) {
         this.visibility = visibity;
     }
 
@@ -239,8 +239,8 @@ public class MongoAccidents
         return weather_condition;
     }
 
-    public void setWeather_condition(String weather_condition) {
-        this.weather_condition = weather_condition;
+    public void setWeather_condition(String weathercondition) {
+        this.weather_condition = weathercondition;
     }
 
 }

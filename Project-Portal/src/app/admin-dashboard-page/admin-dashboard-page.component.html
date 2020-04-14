@@ -61,8 +61,10 @@
         <tr mdbTableCol *ngFor='let user of dataarray'>
           <th scope="row">{{user.id}}</th>
           <th scope="row">{{user.username}}</th>
-          <th *ngIf="user.isAdmin">Admin</th>
-          <th *ngIf="!user.isAdmin">User</th>
+          <th *ngIf="!isMongo && user.isAdmin">Admin</th>
+          <th *ngIf="!isMongo && !user.isAdmin">User</th>
+          <th *ngIf="isMongo && user.admin">Admin</th>
+          <th *ngIf="isMongo && !user.admin">User</th>
           <td style='white-space: nowrap'>
             <button type="button" class="btn btn-primary" (click)="ChangeRole(user.username)" >Change Role</button>
             <button class="btn btn-danger ml-2" mat-raised-button (click)="DeleteUser(user.username)" >Delete</button>

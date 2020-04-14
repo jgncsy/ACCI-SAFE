@@ -71,6 +71,10 @@ public class Neo4jAdminController {
     @GetMapping("/allAccidents")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Neo4jAccident> getRecent100Reports() {
+//        List<Neo4jAccident> list = this.neo4jAccidentRepository.findFirst100OrderByStartTimeDesc();
+//        list.forEach(l -> {
+//            System.out.println("   " +l);
+//        });
         return neo4jAccidentRepository.findFirst100OrderByStartTimeDesc();
     }
 
@@ -129,9 +133,9 @@ public class Neo4jAdminController {
 
     @DeleteMapping("/user/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteUserbyUsername(@PathVariable String username) {
+    public Long deleteUserbyUsername(@PathVariable String username) {
         try {
-            neo4jUserRepository.deleteByUsername(username);
+            return neo4jUserRepository.deleteByUsername(username);
         } catch (NullPointerException er) {
             throw new RuntimeException("No report is found");
         }

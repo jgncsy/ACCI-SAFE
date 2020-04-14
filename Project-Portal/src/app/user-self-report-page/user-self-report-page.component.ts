@@ -1,27 +1,33 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthenticationService} from '../Service/authentication.service';
+import {Router} from '@angular/router';
 import {AlertService} from '../Service/alert.service';
 import {AccidentService} from '../Service/accident.service';
+import {UserService} from '../Service/user.service';
 
 @Component({
-  selector: 'app-searching-page',
-  templateUrl: './searching-page.component.html',
-  styleUrls: ['./searching-page.component.css']
+  selector: 'app-user-self-report-page',
+  templateUrl: './user-self-report-page.component.html',
+  styleUrls: ['./user-self-report-page.component.css']
 })
-export class SearchingPageComponent implements OnInit {
+export class UserSelfReportPageComponent implements OnInit {
+  reportForm: FormGroup;
+  loading: boolean;
+  submitted: boolean;
+  returnUrl: string;
+  message: any;
   map = new Map<string, string>();
   list: string[];
-  searchForm: FormGroup;
-  message: any;
-  submitted: boolean;
-  loading: boolean;
-  location: Location;
-  roadList: Marker[];
-
+  date: Date;
+  dateValue: string;
 
   constructor(private formBuilder: FormBuilder,
+              private router: Router,
               private alertService: AlertService,
-              private accidentService: AccidentService) {
+              private authenticationService: AuthenticationService,
+              private accidentService: AccidentService,
+              private userService: UserService) {
     this.map.set('Alabama', 'AL');
     this.map.set('Alaska', 'AK');
     this.map.set('American Samoa', 'AS');
@@ -86,61 +92,36 @@ export class SearchingPageComponent implements OnInit {
   }
 
   get f() {
-    return this.searchForm.controls;
+    return this.reportForm.controls;
+
   }
 
-
   ngOnInit() {
-    this.searchForm = this.formBuilder.group({
-      road: ['', Validators.required],
+    this.reportForm = this.formBuilder.group({
+      street: ['', Validators.required],
       city: ['', Validators.required],
-      state: ['', Validators.required]
+      state: ['', Validators.required],
+      description: [''],
+      starttime: ['', Validators.required],
+      weathercondition: [''],
+      visibility: [''],
+      humidity: ['']
     });
-
-
-    this.location = {
-      latitude: 37.5703914,
-      longitude: -101.7381144,
-      zoom: 5
-    };
-
-
   }
 
   onSubmit() {
+
     this.submitted = true;
-
-
-    if (this.searchForm.invalid) {
+    if (this.reportForm.invalid) {
       return;
     }
-    this.loading = true;
-    console.log(this.f.state.value, this.f.city.value, this.f.road.value);
-    this.accidentService.getRoadInfo(this.f.state.value, this.f.city.value, this.f.road.value).subscribe(data => {
-      this.roadList = data;
-      this.location = {
-        latitude: this.roadList[0].latitude,
-        longitude: this.roadList[0].longitude,
-        zoom: 13
-      };
-      this.loading = false;
-    }, error => {
-      this.message = error.error.message == null ? error.error : error.error.message;
-      this.alertService.error(this.message);
-      this.loading = false;
-    });
-
+    console.log("?????");
+      this.accidentService.save(this.userService.currentUserValue.user.username, this.f.street.value, this.f.city.value, this.f.state.value, this.f.description.value,
+        this.f.starttime.value, this.f.weathercondition.value, this.f.visibility.value, this.f.humidity.value).subscribe(data => {
+        this.alertService.success('Report successfully !');
+        window.location.reload();
+      }, error => {
+        this.alertService.error('something was wrong');
+      });
   }
-
-}
-
-interface Location {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-}
-
-interface Marker {
-  latitude: number;
-  longitude: number;
 }

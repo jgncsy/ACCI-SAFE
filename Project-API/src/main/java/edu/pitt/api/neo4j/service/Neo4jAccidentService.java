@@ -27,11 +27,11 @@ public class Neo4jAccidentService {
         return neo4jAccidentRepository.getAccidentsByRoad(state,city,street);
     }
 
-    public List<Neo4jAccidentController.CountVisibility> countByvisibility(){
+    public List<Neo4jAccidentController.CountWeatherCondition> countByvisibility(){
         return neo4jAccidentRepository.countByVisibility();
     }
 
-    public List<Neo4jAccidentController.CountVisibility> countByHumidity(){
+    public List<Neo4jAccidentController.CountWeatherCondition> countByHumidity(){
         return neo4jAccidentRepository.countByHumidity();
     }
 

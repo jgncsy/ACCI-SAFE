@@ -45,11 +45,12 @@
   <div class="col-lg-12">
     <div class='card' style="overflow-x:auto;">
       <div class="card-header text-center">
-        <h4>All User Info</h4>
-        <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        <h4>Recent 100 records</h4>
       </div>
       <button class="inline" (click)="this.needUpdate = !this.needUpdate">edit</button>
-      <table  class="table table-hover table-sm" datatable [dtOptions]="dtOptions"
+      <div class="card-body">
+        <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+      <table *ngIf="!loading" class="table table-hover table-sm" datatable [dtOptions]="dtOptions"
               [dtTrigger]="dtTrigger" >
         <thead>
         <tr>
@@ -66,14 +67,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr mdbTableCol *ngFor='let accident of accidents'>
+        <tr  *ngFor='let accident of accidents'>
           <th *ngIf="!this.needUpdate" scope="row">{{accident.startTime}}</th>
           <th *ngIf="!this.needUpdate" scope="row">{{accident.state}}</th>
           <th *ngIf="!this.needUpdate" scope="row">{{accident.city}}</th>
           <th *ngIf="!this.needUpdate" scope="row">{{accident.street}}</th>
           <th *ngIf="!this.needUpdate" scope="row">{{accident.zipcode}}</th>
-          <th *ngIf="!this.needUpdate" scope="row">{{accident.latitude}}</th>
-          <th *ngIf="!this.needUpdate" scope="row">{{accident.longitude}}</th>
+          <th *ngIf="!this.needUpdate && !this.isMongo" scope="row">{{accident.latitude}}</th>
+          <th *ngIf="!this.needUpdate && !this.isMongo" scope="row">{{accident.longitude}}</th>
+          <th *ngIf="!this.needUpdate && this.isMongo" scope="row">{{accident.lat}}</th>
+          <th *ngIf="!this.needUpdate && this.isMongo" scope="row">{{accident.lng}}</th>
           <th *ngIf="!this.needUpdate" scope="row">{{accident.visibility}}</th>
           <th *ngIf="!this.needUpdate" scope="row">{{accident.humidity}}</th>
           <th *ngIf="this.needUpdate" scope="row">
@@ -91,11 +94,17 @@
           <th *ngIf="this.needUpdate" scope="row">
             <input [(ngModel)]="accident.zipcode">
           </th>
-          <th *ngIf="this.needUpdate" scope="row">
+          <th *ngIf="this.needUpdate && ! this.isMongo" scope="row">
             <input [(ngModel)]="accident.latitude">
           </th>
-          <th *ngIf="this.needUpdate" scope="row">
+          <th *ngIf="this.needUpdate && !this.isMongo" scope="row">
             <input [(ngModel)]="accident.longitude">
+          </th>
+          <th *ngIf="this.needUpdate && this.isMongo" scope="row">
+            <input [(ngModel)]="accident.lat">
+          </th>
+          <th *ngIf="this.needUpdate && this.isMongo" scope="row">
+            <input [(ngModel)]="accident.lng">
           </th>
           <th *ngIf="this.needUpdate" scope="row">
             <input [(ngModel)]="accident.visibility">
@@ -103,13 +112,17 @@
           <th *ngIf="this.needUpdate" scope="row">
             <input [(ngModel)]="accident.humidity">
           </th>
-          <td *ngIf="this.needUpdate" style='white-space: nowrap'>
+          <td *ngIf="this.needUpdate && !isMongo" style='white-space: nowrap'>
             <button type="button" class="btn btn-primary" (click)="UpdateAccident(accident.id, accident.state, accident.city, accident.street, accident.zipcode, accident.latitude, accident.longitude, accident.visibility, accident.humidity)" >Update</button>
-            <button class="btn btn-danger ml-2" mat-raised-button (click)="DeleteUser(user.username)" >Delete</button>
+            <button class="btn btn-danger ml-2"  (click)="DeleteUser(accident.id)" >Delete</button>
+          </td>
+          <td *ngIf="this.needUpdate && isMongo" style='white-space: nowrap'>
+            <button type="button" class="btn btn-primary" (click)="UpdateAccident(accident._id, accident.state, accident.city, accident.street, accident.zipcode, accident.latitude, accident.longitude, accident.visibility, accident.humidity)" >Update</button>
+            <button class="btn btn-danger ml-2"  (click)="DeleteUser(accident._id)" >Delete</button>
           </td>
         </tr>
         </tbody>
       </table>
-
+      </div>
     </div>
   </div>

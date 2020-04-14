@@ -10,6 +10,7 @@ public interface CustomRepository
     List<Custom.CountVis>getNumbersByVisibility();
     List<Custom.CountVis>getNumbersByHumidity();
     List<Custom.CountVis>getNumbersByWeatherCondition();
+    List<MongoAccidents>getRecent100Reports();
 
 
 }

@@ -77,7 +77,7 @@ public class JwtTokenProvider {
 
     public String createMongoToken(MongoUsers user) {
 
-        Claims claims = Jwts.claims().setSubject(user.getUsrname());
+        Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("auth", user.getRoles().stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
 
         Date now = new Date();

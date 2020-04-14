@@ -7,6 +7,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.newA
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.project;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,6 +103,14 @@ public class CustomRepositoryImpl implements CustomRepository
                         .count().as("value"),
                 project("label", "value").and("weather_condition").previousOperation());
         return mongoTemplate.aggregate(agg, MongoAccidents.class, Custom.CountVis.class).getMappedResults();
+    }
+
+    @Override
+    public List<MongoAccidents> getRecent100Reports(){
+        Query loadTop100 = new Query();
+        loadTop100.limit(100);
+        loadTop100.with(Sort.by(Sort.Direction.DESC, "startTime"));
+        return mongoTemplate.find(loadTop100, MongoAccidents.class);
     }
 
 

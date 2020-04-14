@@ -55,8 +55,8 @@
             <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="/user/myaccount">My Account</a>
               <div class="dropdown-divider"></div>
-              <a *ngIf="!this.authenticationService.currentUserValue || this.authenticationService.currentUserValue.user.isAdmin" class="dropdown-item" href="/user/login">Login/Sign Up</a>
-              <a *ngIf="this.authenticationService.currentUserValue && !this.authenticationService.currentUserValue.user.isAdmin" class="dropdown-item" (click)="authenticationService.Userlogout()">Logout</a>
+              <a *ngIf="(!this.authenticationService.currentUserValue)" class="dropdown-item" href="/user/login">Login/Sign Up</a>
+              <a *ngIf="(this.authenticationService.currentUserValue)" class="dropdown-item" (click)="authenticationService.Userlogout()">Logout</a>
             </div>
           </li>
         </ul>

@@ -29,7 +29,7 @@ public class MongoUsersController {
     /*User registration*/
     @PostMapping(value = "/signup")
     public Object signup(@RequestBody MongoUsers user) {
-        MongoUsers u = userRepo.findUsersByUsrnameIs(user.getUsrname());
+        MongoUsers u = userRepo.findUsersByUsernameIs(user.getUsername());
         MongoUsers EmailUser = userRepo.findUsersByEmailIs(user.getEmail());
         if (u != null) {
             return ResponseEntity.badRequest().body("username already exists");
@@ -47,25 +47,24 @@ public class MongoUsersController {
     }
 
     /*Check info is matched or not*/
-    @GetMapping(value = "/infoCheck")
+    @PostMapping(value = "/infoCheck")
     public MongoUsers checkInfoBy5Fields(@RequestBody MongoUsers user) {
 
-        List<MongoUsers> u= userRepo.checkInfo(user.getUsrname(), user.getCity(),
-                user.getState(), user.getEmail(), user.getPhone());
-        if(u.size()==0){
+        MongoUsers u= userRepo.checkInfo(user.getUsername(), user.getCity(),
+                user.getState(), user.getEmail(), user.getPhonenumber());
+        if (u == null){
             throw new RuntimeException("user doesn't exist");
-        }else if(u.size()>1){
-            throw new RuntimeException("user duplicated");
-        }else return u.get(0);
+        }
+        return u;
 
     }
 
     /*Reset password for user*/
     @PutMapping(value = "/updatePassword/{username}")
     public MongoUsers restPassword(@PathVariable String username, @RequestBody LoginBody body) {
-        MongoUsers u = userRepo.findUsersByUsrnameIs(username);
+        MongoUsers u = userRepo.findUsersByUsernameIs(username);
         if (u != null) {
-            u.setPwd(body.password);
+            u.setPassword(body.password);
             return userRepo.save(u);
         } else throw new RuntimeException("username doesn't exist (Mongodb)");
 
@@ -74,7 +73,7 @@ public class MongoUsersController {
     /*user login*/
     @PostMapping(value = "/login")
     public Object login(@RequestBody LoginBody body) {
-        MongoUsers u = userRepo.findUsersByUsrnameIsAndPwdIs(body.username, body.password);
+        MongoUsers u = userRepo.findUsersByUsernameIsAndPasswordIs(body.username, body.password);
         if (u == null) {
             return ResponseEntity.badRequest().body("User username and password mismatch");
         }
@@ -89,7 +88,7 @@ public class MongoUsersController {
     @GetMapping(value = "/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public MongoUsers getAllInfo(@PathVariable String username) {
-        MongoUsers user = userRepo.findUsersByUsrnameIs(username);
+        MongoUsers user = userRepo.findUsersByUsernameIs(username);
         if (user == null) {
             throw new RuntimeException("username doesn't exist");
         } else {
@@ -99,10 +98,10 @@ public class MongoUsersController {
 
 
     /*update new info for user*/
-    @PutMapping(value = "/updateAllInfo/{username}")
+    @PostMapping(value = "/updateAllInfo/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public MongoUsers updateAllInfo(@PathVariable String username, @RequestBody MongoUsers user) {
-        MongoUsers u = userRepo.findUsersByUsrnameIs(username);
+        MongoUsers u = userRepo.findUsersByUsernameIs(username);
         if (u == null) {
             throw new RuntimeException("username doesn't exist");
         } else {
@@ -118,7 +117,7 @@ public class MongoUsersController {
             }
             u.setCity(user.getCity());
             u.setState(user.getState());
-            u.setPhone(user.getPhone());
+            u.setPhonenumber(user.getPhonenumber());
             return userRepo.save(u);
 
         }
@@ -128,7 +127,7 @@ public class MongoUsersController {
     @PutMapping(value = "/updateSettings/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public MongoUsers updateSettings(@PathVariable String username) {
-        MongoUsers u = userRepo.findUsersByUsrnameIs(username);
+        MongoUsers u = userRepo.findUsersByUsernameIs(username);
         if (u == null) {
             throw new RuntimeException("username doesn't exist");
         } else {
@@ -141,7 +140,7 @@ public class MongoUsersController {
     @PostMapping(value = "/self-report/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public MongoAccidents self_report(@PathVariable String username, @RequestBody MongoAccidents mongoAccidents) {
-        MongoUsers user = userRepo.findUsersByUsrnameIs(username);
+        MongoUsers user = userRepo.findUsersByUsernameIs(username);
         if (user == null) {
             throw new RuntimeException("username doesn't exist");
         } else {
@@ -161,9 +160,9 @@ public class MongoUsersController {
 
 
     /* Delete pending reports */
-    @DeleteMapping(value = "/{username}/{reportId}")
+    @DeleteMapping(value = "/report/{reportId}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-    public void deleteByReportId (@PathVariable String username, @PathVariable Long reportId) {
+    public void deleteByReportId (@PathVariable String reportId) {
         try{
             acidRepo.deleteById(String.valueOf(reportId));
         } catch (NullPointerException er) {
@@ -182,12 +181,42 @@ public class MongoUsersController {
     public List<MongoUsers> getAllUser(@PathVariable String username) {
 //        return userRepo.findAll();
         if(username.equals("All")) return userRepo.findAll();
-        return userRepo.findUsersByUsrname(username);
+        return userRepo.findUsersByUsername(username);
     }
 
     @GetMapping(value = "/One/{id}")
     public List<MongoUsers> getOneUser(@PathVariable String id) {
         return userRepo.findByThePersonsid(id);
+    }
+
+    static MongoUsers updateUser(@PathVariable String username, @RequestBody MongoUsers user, MongoUsersRepository userRepository) {
+        MongoUsers u = userRepository.findUsersByUsernameIs(username);
+        if (u == null) {
+            throw new RuntimeException("username doesn't exist");
+        } else {
+
+            //check email eligibility
+            String newEmail = user.getEmail();
+            if(newEmail.length()<4){
+                throw new RuntimeException("No valid email found in requestBody");
+            }
+            try{
+                if (!u.getEmail().equalsIgnoreCase(newEmail)) {
+                    if (userRepository.findUsersByEmailIs(newEmail) != null) {
+                        throw new RuntimeException("email already exist");
+                    } else {
+                        u.setEmail(newEmail);
+                    }
+                }
+            }catch(Exception e){
+                 throw new RuntimeException("users email doesn't exist");
+            }
+            u.setCity(user.getCity());
+            u.setState(user.getState());
+            u.setPhonenumber(user.getPhonenumber());
+            return userRepository.save(u);
+
+        }
     }
 
 }

@@ -126,6 +126,7 @@ export class ForgetpasswordPageComponent implements OnInit {
     this.loading = true;
     this.userService.checkUserInfo(this.f.username.value, this.f.email.value,
       this.f.phonenumber.value, this.f.city.value, this.f.state.value)
+
       .subscribe(data => {
           this.Approved = true;
         },
@@ -145,9 +146,9 @@ export class ForgetpasswordPageComponent implements OnInit {
 
 
     this.resetloading = true;
+    console.log(this.userService.currentUserNameValue);
     this.authentication.restPassword(this.userService.currentUserNameValue, this.r.password.value)
       .subscribe(data => {
-        sessionStorage.removeItem('currentUserName');
         this.router.navigate(['/']);
       }, error => {
         this.message = error.error.message == null ? error.error : error.error.message;

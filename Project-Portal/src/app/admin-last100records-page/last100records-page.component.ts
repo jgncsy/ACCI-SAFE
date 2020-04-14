@@ -19,6 +19,7 @@ export class Last100recordsPageComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   loading: boolean;
+  isMongo: boolean;
 
   constructor(private authenticationService: AuthenticationService,
               private userService: UserService,
@@ -32,9 +33,9 @@ export class Last100recordsPageComponent implements OnInit {
 
   ngOnInit() {
     this.dtOptions = {
-      pageLength: 10,
+      pageLength: 20,
       stateSave: true,
-      lengthMenu: [[10], [10]],
+      lengthMenu: [[20], [10], [10]],
       processing: true
     };
     this.dtTrigger.next();
@@ -45,6 +46,13 @@ export class Last100recordsPageComponent implements OnInit {
   public getRecords() {
     this.userService.getRecords().subscribe(data => {
       this.accidents = data;
+      console.log(this.accidents);
+
+      if (sessionStorage.getItem('api') === 'http://localhost:8080/MongoApi') {
+        this.isMongo = true;
+      } else {
+        this.isMongo = false;
+      }
       this.loading = false;
     }, error => {
       this.message = error.error.message == null ? error.error : error.error.message;
@@ -55,12 +63,21 @@ export class Last100recordsPageComponent implements OnInit {
 
   UpdateAccident(id: number, state: string, city: string, street: string, zipcode: string, latitude: string, longitude: string, visibility: number, humidity: number) {
     this.accidentService.updateAccident(id, state, city, street, zipcode, latitude, longitude, visibility, humidity).subscribe(data => {
-        this.alertService.success('user has been updated');
+        this.alertService.success('Record has been updated');
         window.location.reload();
       },
       error => {
         this.message = error.error.message == null ? error.error : error.error.message;
         this.alertService.error(this.message);
       });
+  }
+
+  DeleteUser(id: number) {
+    this.accidentService.deleteById(id).subscribe(data => {
+      this.alertService.success('Record has been deleted');
+      window.location.reload();
+    }, error => {
+      this.alertService.error('something was wrong');
+    });
   }
 }

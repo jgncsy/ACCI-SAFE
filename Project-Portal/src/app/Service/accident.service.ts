@@ -43,6 +43,47 @@ export class AccidentService {
       }
     });
   }
+
+  deleteById(id: number) {
+    return this.http.delete(this.api + `/admin/report/${id}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.userService.currentAdminValue.token
+      }
+    });
+  }
+
+  save(username: string, street: string, city: string, state: string, description: string, startTime: string, weathercondition: string, visibility: number, humidity: number) {
+    return this.http.post(this.api + `/user/self-report/${username}`, {
+      street,
+      city,
+      state,
+      description,
+      startTime,
+      weathercondition,
+      visibility,
+      humidity
+    }, {
+      headers: {
+        Authorization: 'Bearer ' + this.userService.currentUserValue.token
+      }
+    });
+  }
+
+  getUserReport(username: string) {
+    return this.http.get<Accidents[]>(this.api + `/user/reports/${username}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.userService.currentUserValue.token
+      }
+    });
+  }
+
+  UserdeleteById(id: number) {
+    return this.http.delete(this.api + `/user/report/${id}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.userService.currentUserValue.token
+      }
+    });
+  }
 }
 
 interface Marker {

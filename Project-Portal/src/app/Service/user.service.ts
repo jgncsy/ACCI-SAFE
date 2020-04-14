@@ -2,10 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Users} from '../Models/users';
+import {User} from '../Models/users';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 import {Accidents} from '../Models/accidents';
+
 
 @Injectable({
   providedIn: 'root'
@@ -102,6 +104,24 @@ export class UserService {
     return this.http.get<Accidents[]>(this.api + `/admin/allAccidents`, {
       headers: {
         Authorization: 'Bearer ' + this.currentAdminValue.token
+      }
+    });
+  }
+
+  updateSelf(username: string, phonenumber: string, email: string, city: string, state: string) {
+    return this.http.post<User>(this.api + `/user/updateAllInfo/${username}`, {phonenumber, email, city, state}, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        Authorization: 'Bearer ' + this.currentUserValue.token
+      }
+    });
+
+  }
+
+  getUser() {
+    return this.http.get<User>(this.api + `/user/${this.currentUserValue.user.username}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.currentUserValue.token
       }
     });
   }

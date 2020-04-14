@@ -43,7 +43,7 @@ export class AdminAllusersPageComponent implements OnInit {
   UpdateUser(username: string, phonenumber: string, email: string, city: string, state: string) {
     return this.userService.updateUser(username, phonenumber, email, city, state).subscribe(data => {
       this.alertService.success('user has been updated');
-      window.location.reload();
+      this.needUpdate = false;
     }, error => {
       this.message = error.error.message == null ? error.error : error.error.message;
       this.alertService.error(this.message);

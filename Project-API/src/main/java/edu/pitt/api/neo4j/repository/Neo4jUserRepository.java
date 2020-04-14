@@ -18,5 +18,5 @@ import java.util.Optional;
 
         Neo4jUser findOneByEmail(String email);
 
-        void deleteByUsername(String username);
+        Long deleteByUsername(String username);
     }

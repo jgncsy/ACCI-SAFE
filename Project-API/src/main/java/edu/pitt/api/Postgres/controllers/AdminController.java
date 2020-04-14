@@ -133,7 +133,7 @@ public class AdminController {
         try {
             userRepository.deleteByUsername(username);
         } catch (NullPointerException er) {
-            throw new RuntimeException("No report is found");
+            throw new RuntimeException("No user is found");
         }
     }
 

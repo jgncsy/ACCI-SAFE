@@ -10,6 +10,7 @@ import edu.pitt.api.Postgres.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -114,7 +115,7 @@ public class UserController {
         }
     }
 
-    @PutMapping(value = "/updateAllInfo/{username}")
+    @PostMapping(value = "/updateAllInfo/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     public User updateAllInfo(@PathVariable String username, @RequestBody User user) {
         User oldUser = userRepository.findOneByUsername(username);
@@ -156,9 +157,9 @@ public class UserController {
         return accidentRepository.findAllBySource(username);
     }
 
-    @DeleteMapping(value = "/{username}/{reportId}")
+    @DeleteMapping(value = "/report/{reportId}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
-    public void deleteByReportId(@PathVariable String username, @PathVariable Long reportId) {
+    public void deleteByReportId(@PathVariable Long reportId) {
         try {
             accidentRepository.deleteById(reportId);
         } catch (NullPointerException er) {

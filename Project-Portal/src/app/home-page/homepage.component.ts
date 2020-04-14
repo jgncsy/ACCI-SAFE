@@ -114,7 +114,6 @@ export class HomepageComponent implements OnInit {
 
     this.http.get<Data[]>(this.api + `/accident/numbersByState`).subscribe(data => {
       this.dataSource.data = data;
-      console.log(this.dataSource.data);
       this.loading = false;
     }, error => {
       this.message = error.error.message == null ? error.error : error.error.message;

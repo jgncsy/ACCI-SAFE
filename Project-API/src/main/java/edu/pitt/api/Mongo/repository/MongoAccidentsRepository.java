@@ -13,6 +13,8 @@ public interface MongoAccidentsRepository extends MongoRepository<MongoAccidents
     List<MongoAccidents> findAllBySource(String username);
     //search accidents by numbersByState
 
+    List<MongoAccidents> getRecent100Reports();
 
 
+    MongoAccidents findBy_id(String reportId);
 }

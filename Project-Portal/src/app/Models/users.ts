@@ -3,7 +3,7 @@ export class Users {
   token: string;
 }
 
-class User {
+export class User {
   id: number;
   username: string;
   password: string;

@@ -18,9 +18,9 @@ public class MongoUsers {
     @Field
     private boolean isAnonymous=false;
     @Field
-    private String usrname;
+    private String username;
     @Field
-    private String pwd;
+    private String password;
     @Field
     private String email;
     @Field
@@ -28,7 +28,7 @@ public class MongoUsers {
     @Field
     private String state;
     @Field
-    private String phone;
+    private String phonenumber;
     @Field
     private String[] report;
 
@@ -36,16 +36,16 @@ public class MongoUsers {
 
     //Constructors
     public MongoUsers(){}
-    public MongoUsers(ObjectId _id, String usrname, boolean isAdmin, String pwd, String city, String state, String email, String phone, String[] report)
+    public MongoUsers(ObjectId _id, String username, boolean isAdmin, String password, String city, String state, String email, String phonenumber, String[] report)
     {
         this._id = _id;
-        this.usrname = usrname;
+        this.username = username;
         this.isAdmin = isAdmin;
-        this.pwd = pwd;
+        this.password = password;
         this.city = city;
         this.state = state;
         this.email = email;
-        this.phone = phone;
+        this.phonenumber = phonenumber;
         this.report= report;
     }
 
@@ -53,14 +53,14 @@ public class MongoUsers {
     public String get_id() { return _id.toHexString(); }
     public void set_id(ObjectId _id) { this._id = _id; }
 
-    public String getUsrname() { return usrname; }
-    public void setUsrname(String usrname) { this.usrname = usrname; }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
     public boolean isAdmin() { return isAdmin; }
     public void setAdmin(boolean isAdmin) { this.isAdmin = isAdmin; }
 
-    public String getPwd() { return pwd; }
-    public void setPwd(String pwd) { this.pwd = pwd; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
     public String getCity() { return city; }
     public void setCity(String city) { this.city = city; }
@@ -71,8 +71,8 @@ public class MongoUsers {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public String getPhonenumber() { return phonenumber; }
+    public void setPhonenumber(String phonenumber) { this.phonenumber = phonenumber; }
 
     public String[] getReport() { return report; }
     public void setReport(String[] report) { this.report = report; }
