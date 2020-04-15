@@ -28,6 +28,12 @@ export class UserSelfReportPageComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private accidentService: AccidentService,
               private userService: UserService) {
+
+    if (!this.authenticationService.currentUserValue) {
+      this.router.navigate(['user/login']);
+    }
+
+
     this.map.set('Alabama', 'AL');
     this.map.set('Alaska', 'AK');
     this.map.set('American Samoa', 'AS');

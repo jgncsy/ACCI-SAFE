@@ -29,7 +29,8 @@
               "src/assets/scss/material-dashboard.scss",
               "src/assets/css/demo.css"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
