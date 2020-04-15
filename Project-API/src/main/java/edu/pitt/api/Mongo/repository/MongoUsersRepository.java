@@ -16,7 +16,7 @@ public interface MongoUsersRepository extends MongoRepository<MongoUsers,String 
     MongoUsers checkInfo(String username, String city, String state, String email, String phone);
 
 
-    List<MongoUsers> findOneByUsername(String username);
+    MongoUsers findOneByUsername(String username);
 
     List<MongoUsers> findUsersByUsername(String username);
 

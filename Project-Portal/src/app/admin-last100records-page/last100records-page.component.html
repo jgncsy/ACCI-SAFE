@@ -50,10 +50,9 @@
       <button class="inline" (click)="this.needUpdate = !this.needUpdate">edit</button>
       <div class="card-body">
         <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-      <table *ngIf="!loading" class="table table-hover table-sm" datatable [dtOptions]="dtOptions"
-              [dtTrigger]="dtTrigger" >
+      <table mdbTable *ngIf="!loading" class="table table-hover table-sm">
         <thead>
-        <tr>
+        <tr mdbTableCol>
           <th scope="col">Date</th>
           <th scope="col">State</th>
           <th scope="col">City</th>
@@ -67,7 +66,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr  *ngFor='let accident of accidents'>
+        <tr mdbTableCol  *ngFor='let accident of accidents'>
           <th *ngIf="!this.needUpdate" scope="row">{{accident.startTime}}</th>
           <th *ngIf="!this.needUpdate" scope="row">{{accident.state}}</th>
           <th *ngIf="!this.needUpdate" scope="row">{{accident.city}}</th>
@@ -114,15 +113,16 @@
           </th>
           <td *ngIf="this.needUpdate && !isMongo" style='white-space: nowrap'>
             <button type="button" class="btn btn-primary" (click)="UpdateAccident(accident.id, accident.state, accident.city, accident.street, accident.zipcode, accident.latitude, accident.longitude, accident.visibility, accident.humidity)" >Update</button>
-            <button class="btn btn-danger ml-2"  (click)="DeleteUser(accident.id)" >Delete</button>
+            <button class="btn btn-danger ml-2" mat-raised-button  (click)="DeleteUser(accident.id)" >Delete</button>
           </td>
           <td *ngIf="this.needUpdate && isMongo" style='white-space: nowrap'>
             <button type="button" class="btn btn-primary" (click)="UpdateAccident(accident._id, accident.state, accident.city, accident.street, accident.zipcode, accident.latitude, accident.longitude, accident.visibility, accident.humidity)" >Update</button>
-            <button class="btn btn-danger ml-2"  (click)="DeleteUser(accident._id)" >Delete</button>
+            <button class="btn btn-danger ml-2" mat-raised-button  (click)="DeleteUser(accident._id)" >Delete</button>
           </td>
         </tr>
         </tbody>
       </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
       </div>
     </div>
   </div>

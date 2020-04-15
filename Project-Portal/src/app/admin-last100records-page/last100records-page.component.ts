@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthenticationService} from '../Service/authentication.service';
 import {UserService} from '../Service/user.service';
 import {Router} from '@angular/router';
@@ -32,6 +32,7 @@ export class Last100recordsPageComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.dtOptions = {
       pageLength: 20,
       stateSave: true,
@@ -46,7 +47,6 @@ export class Last100recordsPageComponent implements OnInit {
   public getRecords() {
     this.userService.getRecords().subscribe(data => {
       this.accidents = data;
-      console.log(this.accidents);
 
       if (sessionStorage.getItem('api') === 'http://localhost:8080/MongoApi') {
         this.isMongo = true;
@@ -80,4 +80,5 @@ export class Last100recordsPageComponent implements OnInit {
       this.alertService.error('something was wrong');
     });
   }
+
 }
