@@ -1,24 +1,21 @@
-# INFSCI2711-FINAL
-This is a final project for INFSCI2711
-
 # Description
 A accident report website for users to visulize all accidents in US since 2016.  
 Users can self-report accidents with or without usernames.  
 Admin will handle all reports.
 
-# Contributors
-|Developer Name| Pitt ID| Description|
-|:---|---|---|
-|ZIJIAN XU|zix10|Postgres|
-|YUE SUN|yus84|Postgres|
-|HANCHEN WANG|haw110|Postgres|
-|YANBING YANG|yay76|MongoDB|
-|YUCHEN DENG|yud43|MongoDB|
-|TAO TAO|tat76|MongoDB|
-|QIXIAN WU|qiw63|Neo4j|
-|SONG FANG|sof10|Neo4j|
-|XIAOYANG WANG|xiw137|Neo4j|
-|CHUQIAN MA|chm179|Neo4j|
+# Demo
+### Home
+![Image of Homepage](https://github.com/jgncsy/ACCI-SAFE/blob/master/Screen%20Shot%202020-04-18%20at%2010.24.24%20PM.png)
+### Searching Accidents By Road
+![Searching Roads](https://github.com/jgncsy/ACCI-SAFE/blob/master/Screen%20Shot%202020-04-18%20at%2010.27.58%20PM.png)
+### Factor Analysis
+![Factor Analysis](https://github.com/jgncsy/ACCI-SAFE/blob/master/Screen%20Shot%202020-04-18%20at%2010.28.30%20PM.png)
+### Slef Report
+![Self Report](https://github.com/jgncsy/ACCI-SAFE/blob/master/Screen%20Shot%202020-04-18%20at%2010.40.58%20PM.png)
+### User Report History
+![report History](https://github.com/jgncsy/ACCI-SAFE/blob/master/Screen%20Shot%202020-04-18%20at%2010.42.04%20PM.png)
+### Admin DashBoard
+![Admin DashBoard](https://github.com/jgncsy/ACCI-SAFE/blob/master/Screen%20Shot%202020-04-18%20at%2010.39.49%20PM.png)
 
 # Function
 ### Main Page
@@ -72,55 +69,3 @@ Admin will handle all reports.
 ||DELETE|api/admin/:username|Delete user|
 ||GET|api/admin/allUser|Get all users|
 ||GET|api/admin/allAccidents|Get top 100 recent accidents|
-
-# Git
-1. All developers should create a new branch, naming rules for both local and remote is develop-\<FirstName\>
-2. All pushes should be pushed to your own remote branch. Don't push to master.
-3. Merge is allowed only by permision.
-4. Do not add ideals in git.
-5. Make sure all codes are working before push.
-
-# Git Operation
-1. clone from github  
-> cd \<target-location\>   
-> git clone \<github-url\>
-2. check current branch  
-> git branch
-3. create your own branch  
-> git branch develop-\<FirstName\>
-4. change your new branch  
-> git checkout develop-\<FirstName\>
-5. add all changes withour ideals    
-> git add \<project name\>
-6. commit to local git  
-> git commit -m "your commit comments"
-7. return to last revison before push   
-> git reset --soft HEAD~1
-8. first time push to github  
-> git push -u origin develop-\<FirstName\>
-9. after first time push  
-> git push
-10. check current remote url  
-> git remote -v
-11. check all branches   
-> git branch -a
-12. stash changes  
-> git stash
-
-
-# Spring MVC
-1. Datasource should be added in propertity and localhost should be replaced as ENV.PATH
-2. All Models, Service, Controller, DOM should be naming as PostgresModels, MonogoModels, Neo4jModels...
-3. server port should be 8080
-
-# Angular
-1. Installing angular   
-> npm i -g angular
-2. Run angular 
-> ng serve
-
-# Tips
-1. Install sourcetree so that all git logs can be visualized.
-2. It is better that all usernames and passwords for DB are same eg. username: adbproject, password: password
-3. It is better to use IntelliJ, WebStorm IDEs
-4. Test all APIs in postman
